@@ -1527,7 +1527,7 @@ I also hope you can see how this type of a application need not be just a consol
 
 ### Complete Code  
 
-Complete code is available here --
+Complete code is available here -- https://github.com/teq-niq/mcp-stdio-logging.git
 
 
 
