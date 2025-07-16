@@ -1,0 +1,25 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- This SVG defines a coordinate space of 200x200 units -->
+  
+  <!-- Begin a complex shape made of an arc and straight lines -->
+  <path 
+    d="
+      M 50 100              
+      A 50 50 0 0 1 150 100
+      L 150 150            
+      L 50 150            
+      Z                   
+    "
+    fill="lightblue"       
+    stroke="black"         
+  />
+    <!-- M 50 100   Move to the starting point at (50,100) -->
+    <!-- A 50 50 0 0 1 150 100  Draw an arc with rx=50, ry=50, 
+                                no rotation, small arc, sweep clockwise
+                                ending at (150,100). This draws the top half of a circle -->
+    <!-- L 150 150  Draw a straight vertical line down to (150,150) -->
+     <!-- L 50 150 Draw a straight horizontal line left to (50,150) -->
+    <!-- Z Close the path by drawing a line back to the start (50,100) -->
+    <!-- Fill the shape with light blue color -->
+  <!-- Outline the shape with a black stroke -->
+</svg>

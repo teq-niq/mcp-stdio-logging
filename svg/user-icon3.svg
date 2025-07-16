@@ -1,0 +1,24 @@
+<svg  viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+ <style>
+    .outer { fill: #d8b7f2; }
+    .inner { fill: #a277d4; }
+  </style>
+  <!-- Shifted Top horizontal -->
+  <rect x="13" y="7" width="17" height="7" class="outer"/>
+  <rect x="14" y="8" width="15" height="5" class="inner"/>
+  
+    <!-- Shifted Bottom horizontal -->
+  <rect x="13" y="29" width="17" height="7" class="outer"/>
+  <rect x="14" y="30" width="15" height="5" class="inner"/>
+  
+  <!-- Shifted Left vertical -->
+  <rect x="7" y="13" width="7" height="17" class="outer"/>
+  <rect x="8" y="14" width="5" height="15" class="inner"/>
+  
+   <!-- Shifted Right vertical -->
+  <rect x="29" y="13" width="7" height="17" class="outer"/>
+  <rect x="30" y="14" width="5" height="15" class="inner"/>
+  
+  
+  <circle cx="21" cy="21" r="20" fill="none" stroke="#ccc" stroke-width="2" />
+</svg>
