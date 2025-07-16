@@ -1547,7 +1547,7 @@ Complete code is available here -- https://github.com/teq-niq/mcp-stdio-logging.
 
 
 ### References:
-- https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html
+
 - https://modelcontextprotocol.io/sdk/java/mcp-server
 - https://modelcontextprotocol.io/docs/concepts/prompts
 - https://modelcontextprotocol.io/docs/concepts/resources
