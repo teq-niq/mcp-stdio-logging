@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "brand-r-sports-store": {
+      "command": "D:/dev/pub/java/jdk-22.0.2/bin/java",
+      "args": [
+        "-jar",
+        "D:/my-mcp-server-dist/mymcpserver-0.0.1-SNAPSHOT.jar"
+      ],
+      "env": {
+      }
+    }
+  }
+}
