@@ -846,7 +846,7 @@ Will now look at resources and focus on the workspace which does not have the mc
 
 ### Serving resources
 
-After trying to serve resources for which I tried 2 approaches one including @MCPResource from https://github.com/spring-ai-community/mcp-annotations.  I realiszed that this wont work with CoPilot.  
+After trying to serve resources for which I tried 2 approaches one including @MCPResource from https://github.com/spring-ai-community/mcp-annotations.  I realized that this wont work with CoPilot.  
 
 This realization came after looking at the logs.
 
