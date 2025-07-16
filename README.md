@@ -42,8 +42,8 @@ Once we have the basic setup running, we’ll take it further and:
 - Write a minimal custom MCP client  
 - Connect it to the same MCP server  
 - Use the same logging trick to inspect `stdio`-based messages in both directions
-- We will demonstrate using this MCP client what we were unable to demonstrate using Co Pilot. Namely using resources, Prompts and Completions.  
-- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Co Pilot. Also getting a free LLM which is that smart is not so easy.
+- We will demonstrate using this MCP client what we were unable to demonstrate using Copilot. Namely using resources, Prompts and Completions.  
+- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Copilot. Also getting a free LLM which is that smart is not so easy.
 
 We’ll also explore how the **MCP Inspector** can be used alongside our custom server. When the transport is `stdio`, the Inspector essentially behaves like another MCP client — one that doesn’t include an LLM. Think of it as an “MCP browser” or a Postman-like tool for MCP: it let's you inspect messages, invoke tools, and debug interactions directly. (Let's ignore agentic Postman, which is a different topic.)
 
@@ -683,9 +683,9 @@ It simply serves images online at localhost:8080 for use by our MCP server and d
 
 
 
-### Github co Pilot eclipse plugin
+### Github Copilot eclipse plugin
 
-This is the market place page https://marketplace.eclipse.org/content/github-copilot for Github co Pilot eclipse plugin. I prefer installing it from within eclipse 
+This is the market place page https://marketplace.eclipse.org/content/github-copilot for Github Copilot eclipse plugin. I prefer installing it from within eclipse 
 
 <img src="images/market-place1.png" alt="Opening Eclipse Market Place" width="600"/>
 
@@ -693,7 +693,7 @@ Here search for "Github Copilot" and press the "Go" Button.
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
 Press the install button and carry out the remaining steps.
 
-#### Github co Pilot eclipse plugin configuration
+#### Github Copilot eclipse plugin configuration
 
 Visit Copilot> Edit Preferences  
 <img src="images/copilot-prefs.png" alt="Edit Copilot Preferences" width="600"/>  
@@ -823,7 +823,7 @@ The items available under Brand Z Sports Store are: Tennis ball, Tennis racquet,
 |**GitHub Copilot**     | **GitHub Copilot**|
 |Brand Z Sports Store offers footballs, which are also known as soccer balls or futballs in some regions. So yes, futballs are available at Brand Z Sports Store. If you need more details or pricing, let me know!         |Brand Z Sports Store lists "Football" as one of its items, and in the details, it is described as "Also known as a soccer ball. This is not a rugby ball." If you are referring to "futball" as soccer, then yes, the store does have it.       |
 
-I could keep having conversations and showing more differences. The differences are because- Co Pilot has used the additional context it got to its advantage in the case of the Copilot where we had the source code available. Where the additional source code had no impact depending on the question the replies were similar.  
+I could keep having conversations and showing more differences. The differences are because- Copilot has used the additional context it got to its advantage in the case of the Copilot where we had the source code available. Where the additional source code had no impact depending on the question the replies were similar.  
 
 We have explored Tool functions. They are capable of being invoked and behind the scenes can do anything. Therefore its always good that the system asks the user for permission before invoking the tools.
 
