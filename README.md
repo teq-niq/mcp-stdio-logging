@@ -19,6 +19,8 @@ We’ll explore simple, effective techniques for logging MCP protocol communicat
 
 Before diving into logging, though, we’ll get a basic MCP setup running with a custom server and client.    
 
+💡 Everything discussed in this article can be done at no cost, using free tools and open-source components.   
+
 ~~### Objectives~~
 
 ~~**Show how to log MCP protocol messages when the transport is `stdio`.**~~
