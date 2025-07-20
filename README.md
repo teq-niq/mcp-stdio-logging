@@ -114,9 +114,16 @@ You don't have to write to a file as shown below for simplicity. Your "tee" targ
 
 We're using Spring AI as an MCP SDK purely for demonstration purposes here. The same logging concepts and inspection strategies should work just as well with other MCP SDKs, regardless of language or framework. These are protocol-level techniques, not specific to Spring or Java.
 
-Now, for everyone else who’s not quite in a hurry—let’s walk through the setup step by step.
+Now, for everyone else who’s not quite in a hurry—let’s walk through the setup step by step.  
+
+### Co Pilot Conversation Illustration    
 
 
+<img src="svg/output.svg" alt="copilot chat" /> 
+
+WIP : Capturing the whole conversation   
+
+Note: would have been glad to render the MCP logs also same way. But they are too verbose when formatted. Rendering without formatting wont add visual immediate value.
 
 ### Prerequisites
 
