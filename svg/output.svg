@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd" fill-rule="evenodd" height="460.0" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 720.0 460.0" width="720.0">
   <rect visibility="hidden">
-    <animate attributeName="visibility" begin="0;restart.end" dur="118.25s" from="hidden" id="restart" to="hidden"/>
+    <animate attributeName="visibility" begin="0;restart.end" dur="143.5s" from="hidden" id="restart" to="hidden"/>
   </rect>
   	        
   <style>
@@ -1041,7 +1041,7 @@ Cancel  </text>
   </text>
     
   <text class="message" visibility="hidden" x="10.000000" y="167.000000">
-    - Tennis raquet: 2 × $10.20 = $20.40
+    •  Tennis raquet: 2 × $10.20 = $20.40
     <set attributeName="visibility" begin="restart.begin+103.5s" to="visible"/>
      
     <set attributeName="visibility" begin="restart.begin+112.25s" to="hidden"/>
@@ -1049,7 +1049,7 @@ Cancel  </text>
   </text>
     
   <text class="message" visibility="hidden" x="10.000000" y="182.000000">
-    - Tennis net: 1 × $10.00 = $10.00
+    •  Tennis net: 1 × $10.00 = $10.00
     <set attributeName="visibility" begin="restart.begin+103.75s" to="visible"/>
      
     <set attributeName="visibility" begin="restart.begin+112.25s" to="hidden"/>
@@ -1057,7 +1057,7 @@ Cancel  </text>
   </text>
     
   <text class="message" visibility="hidden" x="10.000000" y="197.000000">
-    - Tennis ball: 4 × $10.30 = $41.20
+    •  Tennis ball: 4 × $10.30 = $41.20
     <set attributeName="visibility" begin="restart.begin+104.0s" to="visible"/>
      
     <set attributeName="visibility" begin="restart.begin+112.25s" to="hidden"/>
@@ -1170,5 +1170,263 @@ Cancel  </text>
   </image>
     
   <!-- ending page no 7 -->
+    
+  <!-- starting page no 8 -->
+    
+  <use height="20.000000" href="#avatar-user" visibility="hidden" width="20.000000" x="10.000000" y="0.000000">
+    
+    <set attributeName="visibility" begin="restart.begin+116.25s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+    
+  </use>
+    
+  <text class="name" visibility="hidden" x="35.000000" y="13.000000">
+    username
+    <set attributeName="visibility" begin="restart.begin+116.25s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="38.000000">
+    Can we checkout the cart?
+    <set attributeName="visibility" begin="restart.begin+116.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <use height="20.000000" href="#avatar-pilot" visibility="hidden" width="20.000000" x="10.000000" y="58.000000">
+    
+    <set attributeName="visibility" begin="restart.begin+118.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+    
+  </use>
+    
+  <text class="name" visibility="hidden" x="35.000000" y="71.000000">
+    GitHub Copilot
+    <set attributeName="visibility" begin="restart.begin+118.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+  
+  <g visibility="hidden">
+    
+    <set attributeName="visibility" begin="restart.begin+121.25s" to="visible"/>
+    
+    <set attributeName="visibility" begin="restart.begin+124.25s" to="hidden"/>
+      
+    <rect class="box" height="100.000000" width="660.000000" x="10.000000" y="96.000000"/>
+      
+    <text class="name" x="20.000000" y="116.000000">
+Confirm MCP Tool: checkout_and_pay - brand-z-sports-store (MCP Server)  </text>
+      
+    <text class="message" x="20.000000" y="136.000000">
+Do you want to allow the external MCP tool "brand-z-sports-store/checkout_and_pay" to run?  </text>
+      
+    <rect class="button" height="25.000000" width="80.000000" x="20.000000" y="156.000000">
+      
+      <animate attributeName="fill" begin="restart.begin+123.75s" dur="0.3s" repeatCount="1" values="#eee;#ccc;#eee"/>
+      
+    </rect>
+      
+    <rect class="button" height="25.000000" width="80.000000" x="110.000000" y="156.000000"/>
+      
+    <text class="button-text" x="40.000000" y="169.000000">
+Continue  </text>
+      
+    <text class="button-text" x="135.000000" y="169.000000">
+Cancel  </text>
+    
+  </g>
+  
+  <g visibility="hidden">
+    
+    <set attributeName="visibility" begin="restart.begin+124.25s" to="visible"/>
+    
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+    <rect fill="#eee" height="30.000000" stroke="#ccc" width="660.000000" x="10.000000" y="96.000000"/>
+      
+    <text class="message" x="20.000000" y="116.000000">
+✅ Running MCP tool: checkout_and_pay - brand-z-sports-store (MCP Server)  </text>
+    
+  </g>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="152.000000">
+    Your cart has been successfully checked out and the payment is complete. If you need details about your order or
+    <set attributeName="visibility" begin="restart.begin+124.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="167.000000">
+    want to view your order summary, let me know!
+    <set attributeName="visibility" begin="restart.begin+125.0s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <use height="20.000000" href="#avatar-user" visibility="hidden" width="20.000000" x="10.000000" y="187.000000">
+    
+    <set attributeName="visibility" begin="restart.begin+127.0s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+    
+  </use>
+    
+  <text class="name" visibility="hidden" x="35.000000" y="200.000000">
+    username
+    <set attributeName="visibility" begin="restart.begin+127.0s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="225.000000">
+    show me the order summary please
+    <set attributeName="visibility" begin="restart.begin+127.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <use height="20.000000" href="#avatar-pilot" visibility="hidden" width="20.000000" x="10.000000" y="245.000000">
+    
+    <set attributeName="visibility" begin="restart.begin+129.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+    
+  </use>
+    
+  <text class="name" visibility="hidden" x="35.000000" y="258.000000">
+    GitHub Copilot
+    <set attributeName="visibility" begin="restart.begin+129.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+  
+  <g visibility="hidden">
+    
+    <set attributeName="visibility" begin="restart.begin+132.0s" to="visible"/>
+    
+    <set attributeName="visibility" begin="restart.begin+135.0s" to="hidden"/>
+      
+    <rect class="box" height="100.000000" width="660.000000" x="10.000000" y="283.000000"/>
+      
+    <text class="name" x="20.000000" y="303.000000">
+Confirm MCP Tool: get_last_order_content_in_markdown - brand-z-sports-store (MCP Server)  </text>
+      
+    <text class="message" x="20.000000" y="323.000000">
+Do you want to allow the external MCP tool "brand-z-sports-store/get_last_order_content_in_markdown" to run?  </text>
+      
+    <rect class="button" height="25.000000" width="80.000000" x="20.000000" y="343.000000">
+      
+      <animate attributeName="fill" begin="restart.begin+134.5s" dur="0.3s" repeatCount="1" values="#eee;#ccc;#eee"/>
+      
+    </rect>
+      
+    <rect class="button" height="25.000000" width="80.000000" x="110.000000" y="343.000000"/>
+      
+    <text class="button-text" x="40.000000" y="356.000000">
+Continue  </text>
+      
+    <text class="button-text" x="135.000000" y="356.000000">
+Cancel  </text>
+    
+  </g>
+  
+  <g visibility="hidden">
+    
+    <set attributeName="visibility" begin="restart.begin+135.0s" to="visible"/>
+    
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+    <rect fill="#eee" height="30.000000" stroke="#ccc" width="660.000000" x="10.000000" y="283.000000"/>
+      
+    <text class="message" x="20.000000" y="303.000000">
+✅ Running MCP tool: get_last_order_content_in_markdown - brand-z-sports-store (MCP Server)  </text>
+    
+  </g>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="339.000000">
+    Here is your order summary from Brand Z Sports Store:
+    <set attributeName="visibility" begin="restart.begin+135.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="354.000000">
+    •  Order Number: ORD-1752352342039
+    <set attributeName="visibility" begin="restart.begin+135.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="369.000000">
+    •  Order Date: 2025-07-13
+    <set attributeName="visibility" begin="restart.begin+136.0s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="384.000000">
+    •  Items Purchased:
+    <set attributeName="visibility" begin="restart.begin+136.25s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="399.000000">
+    •  Tennis raquet: 2 units at $10.20 each (Total: $20.40)
+    <set attributeName="visibility" begin="restart.begin+136.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="414.000000">
+    •  Tennis net: 1 unit at $10.00 (Total: $10.00)
+    <set attributeName="visibility" begin="restart.begin+136.75s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="429.000000">
+    •  Tennis ball: 4 units at $10.30 each (Total: $41.20)
+    <set attributeName="visibility" begin="restart.begin+137.0s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="444.000000">
+    •  Total Amount: $71.60 USD
+    <set attributeName="visibility" begin="restart.begin+137.25s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <text class="message" visibility="hidden" x="10.000000" y="459.000000">
+    If you need more details or a receipt, let me know!
+    <set attributeName="visibility" begin="restart.begin+137.5s" to="visible"/>
+     
+    <set attributeName="visibility" begin="restart.begin+141.5s" to="hidden"/>
+      
+  </text>
+    
+  <!-- ending page no 8 -->
   
 </svg>
