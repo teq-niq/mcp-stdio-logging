@@ -1577,4 +1577,4 @@ Complete code is available here -- https://github.com/teq-niq/mcp-stdio-logging.
 - https://github.com/spring-ai-community/awesome-spring-ai
 
 ### Acknowledgements
-   I would like to thank Dan Vega for reviewing this article of mine.
+   I would like to thank Dan Vega and Badr NASS LAHSEN for reviewing this article of mine.
