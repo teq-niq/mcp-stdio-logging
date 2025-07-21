@@ -21,16 +21,6 @@ Before diving into logging, though, we’ll get a basic MCP setup running with a
 
 💡 Everything discussed in this article can be done at no cost, using free tools and open-source components.   
 
-~~### Objectives~~
-
-~~**Show how to log MCP protocol messages when the transport is `stdio`.**~~
-
-~~We’ll explore a few simple tricks for capturing live MCP protocol communication over  `stdio` — particularly in situations where even the MCP Inspector doesn’t help much in a simple straightforward way. Suggested: This is especially true in scenarios where an MCP client (like GitHub Copilot or a custom MCP client) launches the MCP server via stdio directly, without an MCP Inspector or proxy in between, and when HTTP or SSE transports aren't involved.~~
-
-~~But before we get to all that, we need something running. After all, you can’t inspect a protocol without an active setup.~~
-
-~~To begin, we’ll use a **custom MCP server**, paired with at least **one MCP client**.~~
-
 
 ---
 
