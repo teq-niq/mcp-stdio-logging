@@ -1171,18 +1171,4 @@ Cancel  </text>
     
   <!-- ending page no 7 -->
   
-  <!-- guides begin-->
-  
-  <rect fill="none" height="460.0" stroke="brown" width="720.0" x="0" y="0"/>
-  
-  <rect fill="none" height="458.0" stroke="blue" width="718.0" x="1" y="1"/>
-  
-  <rect fill="none" height="456.0" stroke="red" width="716.0" x="2" y="2"/>
-  
-  <line stroke="purple" stroke-width="1" x1="360.0" x2="360.0" y1="0" y2="460.0"/>
-   
-  <line stroke="purple" stroke-width="1" x1="0" x2="720.0" y1="230.0" y2="230.0"/>
-  
-  <!-- guides end-->
-  
 </svg>
