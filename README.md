@@ -1103,8 +1103,6 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 |You can use this Markdown to display the tennis ball details and its image. Let me know if you need it in a specific file!|
 |**Username** |
 |I have created a empty project named "files" in the previously empty eclipse workspace. can you create  a file named abc.MD in the files project. This file abc.MD should contain in it details of the Tennis ball and a picture of same. This file abc.MD should be formatted in markdown format. |
-| empty workspace continued|
-|----------|
 |**GitHub Copilot**     |
 |✅ Running create_file tool       |
 |The file abc.MD has been created in your files project. It contains the details of the Tennis ball and its picture, formatted in markdown. You can open this file in your editor to view or further edit the content. If you need any more changes or want to add details for other items, let me know!       |
