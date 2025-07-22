@@ -1163,6 +1163,7 @@ While the LLM provides intelligent orchestration, a custom client could further 
 
 ## Cart
 
+```txt
 - **orderItems**:
   - **itemName**: Tennis raquet
     - **qty**: 2
@@ -1183,6 +1184,8 @@ While the LLM provides intelligent orchestration, a custom client could further 
     - ![image](http://localhost:8080/images/tennis_ball.png)
     - **currency**: USD
 - **total**: 71.6 USD
+```
+
 
 Let me know if you want to proceed to checkout or need to modify your cart.
 | empty workspace continued|
