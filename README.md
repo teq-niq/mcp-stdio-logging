@@ -1196,7 +1196,7 @@ Let me know if you want to proceed to checkout or need to modify your cart.
 |✅ Running create_file tool       |
 |The cart details have been saved as cart.MD in the files project of your Eclipse workspace. You can now view or edit this file directly within your project. If you need any further actions or modifications, let me know!      |
 
-<img src="images/md_cart_src1.png" alt="Cart" height="300"/>     
+<img src="images/md_cart_src1.png" alt="Cart" height="300"/>   
 <img src="images/md_cart_prev1.png" alt="Cart Preview" height="300"/>  
 
 Now we must verify that we wish to retain these changes.
