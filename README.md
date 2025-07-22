@@ -1223,8 +1223,9 @@ Now close the file before proceeding.
 |✅ Running MCP tool: get_last_order_content_in_markdown - brand-z-sports-store(MCP Server)       |   
 
 
-Here is your order summary in markdown format:
+Here is your order summary in markdown format:  
 
+```txt
 Order
 
 	•  orderNumber: ORD-1753209764155
@@ -1249,6 +1250,8 @@ Order
 		•  currency: USD
 
 	•  total: 71.6 USD
+```
+
 
 If you want this saved to a file in your workspace, let me know the filename and location!
 
@@ -1264,13 +1267,13 @@ If you want this saved to a file in your workspace, let me know the filename and
 |✅ Running create_file tool       |
 |The order summary has been downloaded and saved as order.MD in the "files" project of your Eclipse workspace. You can now open order.MD to view your order details. If you need further assistance, let me know!      |
 
-<img src="images/md_order_src1.png" alt="Cart" width="400"/>     
-<img src="images/md_order_prev1.png" alt="Cart Preview" width="400"/>  
+<img src="images/md_order_src1.png" alt="Cart" height="400"/>  <img src="images/md_order_prev1.png" alt="Cart Preview" height="400"/>  
 
-Now we must verify that we wish to retain these changes.
+Now we must verify that we wish to retain these changes.   
 
-<img src="images/orderFileChangedKeep.png" alt="keep the file" width="400"/>  
-<img src="images/orderFileChangedDone.png" alt="agree and done" width="400"/>  
+<img src="images/orderFileChangedKeep.png" alt="keep the file" width="400"/>    
+ 
+<img src="images/orderFileChangedDone.png" alt="agree and done" width="400"/>    
 
 Now close the file before proceeding.
 
