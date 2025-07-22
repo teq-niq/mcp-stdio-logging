@@ -1193,8 +1193,8 @@ Let me know if you want to proceed to checkout or need to modify your cart.
 |✅ Running create_file tool       |
 |The cart details have been saved as cart.MD in the files project of your Eclipse workspace. You can now view or edit this file directly within your project. If you need any further actions or modifications, let me know!      |
 
-<img src="images/md_cart_src.png" alt="Cart" width="400"/>     
-<img src="images/md_cart_prev.png" alt="Cart Preview" width="400"/>  
+<img src="images/md_cart_src1.png" alt="Cart" width="400"/>     
+<img src="images/md_cart_prev1.png" alt="Cart Preview" width="400"/>  
 
 Now we must verify that we wish to retain these changes.
 
@@ -1262,8 +1262,8 @@ If you want this saved to a file in your workspace, let me know the filename and
 |✅ Running create_file tool       |
 |The order summary has been downloaded and saved as order.MD in the "files" project of your Eclipse workspace. You can now open order.MD to view your order details. If you need further assistance, let me know!      |
 
-<img src="images/md_order_src.png" alt="Cart" width="400"/>     
-<img src="images/md_order_prev.png" alt="Cart Preview" width="400"/>  
+<img src="images/md_order_src1.png" alt="Cart" width="400"/>     
+<img src="images/md_order_prev1.png" alt="Cart Preview" width="400"/>  
 
 Now we must verify that we wish to retain these changes.
 
