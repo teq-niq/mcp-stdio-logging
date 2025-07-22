@@ -1067,9 +1067,6 @@ We will revisit these and discuss them in MCP client section later.
 |**Username** |
 |What are the items available under Brand Z Sports Store? |
 |**GitHub Copilot**     |
-|**Confirm MCP Tool: get_items - brand-z-sports-store(MCP Server)**        |
-|Do you want to allow the external MCP tool "brand-z-sports-store/get_items" to run? Continue/Cancel        |
-|✅ Running MCP tool: get_items - brand-z-sports-store (MCP Server)       |
 The items available under Brand Z Sports Store are: Tennis ball, Tennis racquet, Football, and Tennis net.  Let me know if you need more help!    |
 |**Username** |
 |Show me in html details of the tennis ball and its picture |
@@ -1164,13 +1161,28 @@ While the LLM provides intelligent orchestration, a custom client could further 
 |Do you want to allow the external MCP tool "brand-z-sports-store/get_cart_content_in_markdown" to run? Continue/Cancel|
 |✅ Running MCP tool: get_cart_content_in_markdown - brand-z-sports-store(MCP Server)       |
 
-Cart
+## Cart
 
-- Tennis raquet: 2 × $10.20 = $20.40 
-- Tennis net: 1 × $10.00 = $10.00 
-- Tennis ball: 4 × $10.30 = $41.20 
-
-Total: $71.60 USD
+- **orderItems**:
+  - **itemName**: Tennis raquet
+    - **qty**: 2
+    - **rate**: 10.2
+    - **cost**: 20.4
+    - ![image](http://localhost:8080/images/tennis_raquet.png)
+    - **currency**: USD
+  - **itemName**: Tennis net
+    - **qty**: 1
+    - **rate**: 10.0
+    - **cost**: 10.0
+    - ![image](http://localhost:8080/images/tennis_net.png)
+    - **currency**: USD
+  - **itemName**: Tennis ball
+    - **qty**: 4
+    - **rate**: 10.3
+    - **cost**: 41.2
+    - ![image](http://localhost:8080/images/tennis_ball.png)
+    - **currency**: USD
+- **total**: 71.6 USD
 
 Let me know if you want to proceed to checkout or need to modify your cart.
 | empty workspace continued|
@@ -1208,17 +1220,37 @@ Now close the file before proceeding.
 |Do you want to allow the external MCP tool "brand-z-sports-store/get_last_order_content_in_markdown" to run? Continue/Cancel|
 |✅ Running MCP tool: get_last_order_content_in_markdown - brand-z-sports-store(MCP Server)       |   
 
-Here is your order summary from Brand Z Sports Store:
 
-	•  Order Number: ORD-1752352342039
-	•  Order Date: 2025-07-13
-	•  Items Purchased:
-	•  Tennis raquet: 2 units at $10.20 each (Total: $20.40)
-	•  Tennis net: 1 unit at $10.00 (Total: $10.00)
-	•  Tennis ball: 4 units at $10.30 each (Total: $41.20)
-	•  Total Amount: $71.60 USD
+Here is your order summary in markdown format:
 
-If you need more details or a receipt, let me know!
+Order
+
+	•  orderNumber: ORD-1753209764155
+	•  orderDateTime: 2025-07-23T00:12:44.156735700
+	•  orderItems:
+	•  itemName: Tennis raquet
+		•  qty: 2
+		•  rate: 10.2
+		•  cost: 20.4
+		•  currency: USD
+
+	•  itemName: Tennis net
+		•  qty: 1
+		•  rate: 10.0
+		•  cost: 10.0
+		•  currency: USD
+
+	•  itemName: Tennis ball
+		•  qty: 4
+		•  rate: 10.3
+		•  cost: 41.2
+		•  currency: USD
+
+	•  total: 71.6 USD
+
+If you want this saved to a file in your workspace, let me know the filename and location!
+
+
 
 | empty workspace continued|
 |----------|
