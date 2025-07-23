@@ -1115,6 +1115,9 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 ```
 
 
+Before proceeding with the chat, manually create a simple empty eclipse project named "files" in the workspace.  
+
+
 | empty workspace - workspace without MCP server code|
 |----------|
 |You can use this Markdown to display the tennis ball details and its image. Let me know if you need it in a specific file!|
