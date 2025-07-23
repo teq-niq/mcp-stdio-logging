@@ -755,7 +755,7 @@ As I went about coding the number of tools actually increased.
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities. We won’t explore it here, but it’s worth enabling if you’re experimenting with MCP integrations. In version 0.9.2 Agent mode is no longer in just Preview mode.
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.2 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
 
 
 ### Checking the logs
