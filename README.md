@@ -19,7 +19,9 @@ We’ll explore simple, effective techniques for logging MCP protocol communicat
 
 Before diving into logging, though, we’ll get a basic MCP setup running with a custom server and client.    
 
-💡 Everything discussed in this article can be done at no cost, using free tools and open-source components.   
+While it's true that I started this write-up primarily to tackle the problem of logging MCP’s stdio JSON protocol communication, I also cover several core MCP concepts that are relevant beyond just logging. 
+
+💡 Everything discussed in this article can be done at **no cost**, using **free tools** and **open-source components**.   
 
 
 ---
