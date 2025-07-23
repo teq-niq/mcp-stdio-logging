@@ -714,8 +714,8 @@ Visit Copilot> Edit Preferences
 Then reach here  
 <img src="images/enable-enterprise.png" alt="Preferences" width="600"/>  
 You can enable  GitHub CoPilot enterprise access using the Github Enterprise Authentication Endpoint textbox shown here. Thats just one of the many ways.
-In my case my client enables the same by some other means that involves okta and github and SSO.
-GitHub CoPilot can still be used without enterprise access within limits.
+
+GitHub CoPilot can still be used with Free access within limits.
 
 See https://docs.github.com/en/copilot/concepts/copilot-billing/about-individual-copilot-plans-and-benefits  
 
