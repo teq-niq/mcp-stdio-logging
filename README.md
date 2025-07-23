@@ -122,7 +122,11 @@ You can use any other language, IDE and carry out the same experiments.
 That said I am using
 - Spring Tools for Eclipse
 - Java 22
-- Maven 
+- Maven  
+
+I originally began this writeup to explore various techniques for debugging the stdio logging of MCP JSON within the context of Spring AI and MCP. Along the way, I also touched on several core MCP concepts that are relevant beyond just logging. Even if teeing seems unnecessary in your current setup, understanding the concept can still prove useful in other contexts. The hope is that—even if your stack looks different—the ideas and patterns discussed here will still resonate and map cleanly to your environment.   
+
+While the examples use a specific stack, these are not hard prerequisites. You’re free to use any language, SDK, IDE, or tooling that suits your setup. Similar exercises should be feasible in most modern stacks, with the underlying concepts staying consistent across environments.   
 
 
 ### MCP Server setup
