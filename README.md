@@ -884,7 +884,9 @@ Please see about resources/list here- https://modelcontextprotocol.io/specificat
 
 But there is no similar enquiry about resources.  Since there is no enquiry about resources the server cannot inform about resources. I rewrote all my resource code using @Tool for now.
 
-Which bring us to the class we had mentioned earlier namely  
+Which bring us to the class we had mentioned earlier namely StoreResourceNowToolsProvider.java
+
+#### StoreResourceNowToolsProvider.java
 
 ```java
 package com.eg.mcp.providers.tools;
@@ -1048,9 +1050,10 @@ Server authors should be prepared to handle any of these interaction patterns wh
 
 Bottom line if I were to write a Resource code and need it to be discoverable by Copilot just like how tools are I would have to decorate the method with both @McpResource and @Tool, or write a Bridge Tool. You can choose either approach. In my scenario since I wanted these to be usable by the LLM directly I chose plain @Tool route and did not bother about coding them as a resource even though functionally I was using them as resources.   
 
-
+#### Tools Improvement Area  
 One area I encourage readers to improve upon is making their tools more generic. In a real-world scenario, having specific methods like getTennisRacquetImage() or getFootballImage() quickly becomes unmaintainable. Just as you would with resource templates, aim to create more flexible tool methods that accept parameters—allowing the LLM to invoke them dynamically based on intent. Be sure to provide clear and detailed descriptions, so the LLM can understand how and when to use the tool effectively.   
 
+#### MCP resources, prompts and completions  
 Back to Resources- I have not thrown away MCP resources, prompts and completions. Please see in MyMcpServerApplication 
 
 - method brandZPlaceHolderResources() for my resource implementations. Leveraging here both McpServerFeatures.SyncResourceSpecification and SpringAiMcpAnnotationProvider.createSyncResourceSpecifications() with @McpResource.
