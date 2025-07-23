@@ -704,7 +704,9 @@ This is the market place page https://marketplace.eclipse.org/content/github-cop
 
 Here search for "Github Copilot" and press the "Go" Button.  
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
-Press the install button and carry out the remaining steps.
+Press the install button and carry out the remaining steps.   
+0.8.0 was the version available at the time of writing this.  
+0.9.2 is available now and behaves mostly the same for the purpose of this article.   
 
 #### Github Copilot eclipse plugin configuration
 
@@ -753,7 +755,7 @@ As I went about coding the number of tools actually increased.
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities. We won’t explore it here, but it’s worth enabling if you’re experimenting with MCP integrations.
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities. We won’t explore it here, but it’s worth enabling if you’re experimenting with MCP integrations. In version 0.9.2 Agent mode is no longer in just Preview mode.
 
 
 ### Checking the logs
@@ -1134,7 +1136,7 @@ Now we must verify that we wish to retain these changes.
 <img src="images/abcFileChangedKeep.png" alt="keep the file" width="400"/>  
 <img src="images/abcFileChangedDone.png" alt="agree and done" width="400"/>  
 
-Now close the file before proceeding.
+Now close the file before proceeding so that its no longer open in the eclipse Editor.
 
 
 Note: Here we have demonstrated Agentic LLM based workflow orchestration.   
