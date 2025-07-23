@@ -1222,7 +1222,7 @@ Now we must verify that we wish to retain these changes.
 <img src="images/cartFileChangedKeep.png" alt="keep the file" width="400"/>  
 <img src="images/cartFileChangedDone.png" alt="agree and done" width="400"/>  
 
-Now close the file before proceeding.
+Now close the file before proceeding so that its no longer open in eclipse editors.
 
 
 | workspace without MCP server code|
