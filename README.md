@@ -744,7 +744,9 @@ Press "Apply and close" button.
 
 Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP  
 
-<img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>
+<img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
+
+As I went about coding the number of tools actually increased.  
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
@@ -1044,9 +1046,12 @@ Server authors should be prepared to handle any of these interaction patterns wh
 
 ```
 
-Bottom line if I were to write a Resource code and need it to be discoverable by Copilot just like how tools are I would have to decorate the method with both @McpResource and @Tool, or write a Bridge Tool. You can choose either approach. In my scenario since I wanted these to be usable by the LLM directly I chose plain @Tool route and did not bother about coding them as a resource even though functionally I was using them as resources. 
+Bottom line if I were to write a Resource code and need it to be discoverable by Copilot just like how tools are I would have to decorate the method with both @McpResource and @Tool, or write a Bridge Tool. You can choose either approach. In my scenario since I wanted these to be usable by the LLM directly I chose plain @Tool route and did not bother about coding them as a resource even though functionally I was using them as resources.   
 
-That said I have not thrown away MCP resources, prompts and completions. Please see in MyMcpServerApplication 
+
+One area I encourage readers to improve upon is making their tools more generic. In a real-world scenario, having specific methods like getTennisRacquetImage() or getFootballImage() quickly becomes unmaintainable. Just as you would with resource templates, aim to create more flexible tool methods that accept parameters—allowing the LLM to invoke them dynamically based on intent. Be sure to provide clear and detailed descriptions, so the LLM can understand how and when to use the tool effectively.   
+
+Back to Resources- I have not thrown away MCP resources, prompts and completions. Please see in MyMcpServerApplication 
 
 - method brandZPlaceHolderResources() for my resource implementations. Leveraging here both McpServerFeatures.SyncResourceSpecification and SpringAiMcpAnnotationProvider.createSyncResourceSpecifications() with @McpResource.
 
