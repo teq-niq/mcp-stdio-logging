@@ -889,6 +889,7 @@ Which bring us to the class we had mentioned earlier namely StoreResourceNowTool
 #### StoreResourceNowToolsProvider.java
 
 ```java
+
 package com.eg.mcp.providers.tools;
 
 import java.io.IOException;
@@ -1087,7 +1088,8 @@ The items available under Brand Z Sports Store are: Tennis ball, Tennis racquet,
 |**Confirm MCP Tool: get_tennis_ball_image - brand-z-sports-store(MCP Server)**        |
 |Do you want to allow the external MCP tool "brand-z-sports-store/get_tennis_ball_image" to run? Continue/Cancel|    |✅ Running MCP tool: get_tennis_ball_image - brand-z-sports-store(MCP Server)       |
 Here are the details of a tennis ball from Brand Z Sports Store, formatted in HTML:    |
-```html
+
+```txt
 <div>
   <h2>Tennis Ball</h2>
   <p>Type: Standard Tennis ball</p>
@@ -1102,13 +1104,15 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 |**GitHub Copilot**     |
 |Here is the tennis ball information in Markdown format:|   
 
-```md
+```txt
 ## Tennis Ball
 
 - Type: Standard Tennis ball
 
 ![Tennis Ball](http://localhost:8080/images/tennis_ball.png)
 ```
+
+
 | empty workspace - workspace without MCP server code|
 |----------|
 |You can use this Markdown to display the tennis ball details and its image. Let me know if you need it in a specific file!|
@@ -1118,8 +1122,7 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 |✅ Running create_file tool       |
 |The file abc.MD has been created in your files project. It contains the details of the Tennis ball and its picture, formatted in markdown. You can open this file in your editor to view or further edit the content. If you need any more changes or want to add details for other items, let me know!       |
 
-<img src="images/md-tennisball-src.png" alt="created markdown file" width="600"/>  
-<img src="images/md-tennisball-prev.png" alt="showing markdown file" width="600"/>  
+<img src="images/md-tennisball-src.png" alt="created markdown file" height="188"/>   <img src="images/md-tennisball-prev.png" alt="showing markdown file" height="188"/>  
 
 Now we must verify that we wish to retain these changes.
 
