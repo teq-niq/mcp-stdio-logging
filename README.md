@@ -19,7 +19,9 @@ We’ll explore simple, effective techniques for logging MCP protocol communicat
 
 Before diving into logging, though, we’ll get a basic MCP setup running with a custom server and client.    
 
-💡 Everything discussed in this article can be done at no cost, using free tools and open-source components.   
+While it's true that I started this write-up primarily to tackle the problem of logging MCP’s stdio JSON protocol communication, I also cover several core MCP concepts that are relevant beyond just logging. 
+
+💡 Everything discussed in this article can be done at **no cost**, using **free tools** and **open-source components**.   
 
 
 ---
@@ -122,7 +124,11 @@ You can use any other language, IDE and carry out the same experiments.
 That said I am using
 - Spring Tools for Eclipse
 - Java 22
-- Maven 
+- Maven  
+
+I originally began this writeup to explore various techniques for debugging the stdio logging of MCP JSON within the context of Spring AI and MCP. Along the way, I also touched on several core MCP concepts that are relevant beyond just logging. Even if teeing seems unnecessary in your current setup, understanding the concept can still prove useful in other contexts. The hope is that—even if your stack looks different—the ideas and patterns discussed here will still resonate and map cleanly to your environment.   
+
+While the examples use a specific stack, these are not hard prerequisites. You’re free to use any language, SDK, IDE, or tooling that suits your setup. Similar exercises should be feasible in most modern stacks, with the underlying concepts staying consistent across environments.   
 
 
 ### MCP Server setup
@@ -698,7 +704,9 @@ This is the market place page https://marketplace.eclipse.org/content/github-cop
 
 Here search for "Github Copilot" and press the "Go" Button.  
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
-Press the install button and carry out the remaining steps.
+Press the install button and carry out the remaining steps.   
+0.8.0 was the version available at the time of writing this.  
+0.9.2 is available now and behaves mostly the same for the purpose of this article.   
 
 #### Github Copilot eclipse plugin configuration
 
@@ -708,8 +716,8 @@ Visit Copilot> Edit Preferences
 Then reach here  
 <img src="images/enable-enterprise.png" alt="Preferences" width="600"/>  
 You can enable  GitHub CoPilot enterprise access using the Github Enterprise Authentication Endpoint textbox shown here. Thats just one of the many ways.
-In my case my client enables the same by some other means that involves okta and github and SSO.
-GitHub CoPilot can still be used without enterprise access within limits.
+
+GitHub CoPilot can still be used with Free access within limits.
 
 See https://docs.github.com/en/copilot/concepts/copilot-billing/about-individual-copilot-plans-and-benefits  
 
@@ -740,12 +748,14 @@ Press "Apply and close" button.
 
 Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP  
 
-<img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>
+<img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
+
+As I went about coding the number of tools actually increased.  
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities. We won’t explore it here, but it’s worth enabling if you’re experimenting with MCP integrations.
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.2 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
 
 
 ### Checking the logs
@@ -878,9 +888,12 @@ Please see about resources/list here- https://modelcontextprotocol.io/specificat
 
 But there is no similar enquiry about resources.  Since there is no enquiry about resources the server cannot inform about resources. I rewrote all my resource code using @Tool for now.
 
-Which bring us to the class we had mentioned earlier namely  
+Which bring us to the class we had mentioned earlier namely StoreResourceNowToolsProvider.java
+
+#### StoreResourceNowToolsProvider.java
 
 ```java
+
 package com.eg.mcp.providers.tools;
 
 import java.io.IOException;
@@ -1040,9 +1053,13 @@ Server authors should be prepared to handle any of these interaction patterns wh
 
 ```
 
-Bottom line if I were to write a Resource code and need it to be discoverable by Copilot just like how tools are I would have to decorate the method with both @McpResource and @Tool, or write a Bridge Tool. You can choose either approach. In my scenario since I wanted these to be usable by the LLM directly I chose plain @Tool route and did not bother about coding them as a resource even though functionally I was using them as resources. 
+Bottom line if I were to write a Resource code and need it to be discoverable by Copilot just like how tools are I would have to decorate the method with both @McpResource and @Tool, or write a Bridge Tool. You can choose either approach. In my scenario since I wanted these to be usable by the LLM directly I chose plain @Tool route and did not bother about coding them as a resource even though functionally I was using them as resources.   
 
-That said I have not thrown away MCP resources, prompts and completions. Please see in MyMcpServerApplication 
+#### Tools Improvement Area  
+One area I encourage readers to improve upon is making their tools more generic. In a real-world scenario, having specific methods like getTennisRacquetImage() or getFootballImage() quickly becomes unmaintainable. Just as you would with resource templates, aim to create more flexible tool methods that accept parameters—allowing the LLM to invoke them dynamically based on intent. Be sure to provide clear and detailed descriptions, so the LLM can understand how and when to use the tool effectively.   
+
+#### MCP resources, prompts and completions  
+Back to Resources- I have not thrown away MCP resources, prompts and completions. Please see in MyMcpServerApplication 
 
 - method brandZPlaceHolderResources() for my resource implementations. Leveraging here both McpServerFeatures.SyncResourceSpecification and SpringAiMcpAnnotationProvider.createSyncResourceSpecifications() with @McpResource.
 
@@ -1075,7 +1092,8 @@ The items available under Brand Z Sports Store are: Tennis ball, Tennis racquet,
 |**Confirm MCP Tool: get_tennis_ball_image - brand-z-sports-store(MCP Server)**        |
 |Do you want to allow the external MCP tool "brand-z-sports-store/get_tennis_ball_image" to run? Continue/Cancel|    |✅ Running MCP tool: get_tennis_ball_image - brand-z-sports-store(MCP Server)       |
 Here are the details of a tennis ball from Brand Z Sports Store, formatted in HTML:    |
-```html
+
+```txt
 <div>
   <h2>Tennis Ball</h2>
   <p>Type: Standard Tennis ball</p>
@@ -1090,13 +1108,18 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 |**GitHub Copilot**     |
 |Here is the tennis ball information in Markdown format:|   
 
-```md
+```txt
 ## Tennis Ball
 
 - Type: Standard Tennis ball
 
 ![Tennis Ball](http://localhost:8080/images/tennis_ball.png)
 ```
+
+
+Before proceeding with the chat, manually create a simple empty eclipse project named "files" in the workspace.  
+
+
 | empty workspace - workspace without MCP server code|
 |----------|
 |You can use this Markdown to display the tennis ball details and its image. Let me know if you need it in a specific file!|
@@ -1106,15 +1129,14 @@ Here are the details of a tennis ball from Brand Z Sports Store, formatted in HT
 |✅ Running create_file tool       |
 |The file abc.MD has been created in your files project. It contains the details of the Tennis ball and its picture, formatted in markdown. You can open this file in your editor to view or further edit the content. If you need any more changes or want to add details for other items, let me know!       |
 
-<img src="images/md-tennisball-src.png" alt="created markdown file" width="600"/>  
-<img src="images/md-tennisball-prev.png" alt="showing markdown file" width="600"/>  
+<img src="images/md-tennisball-src.png" alt="created markdown file" height="188"/>   <img src="images/md-tennisball-prev.png" alt="showing markdown file" height="188"/>  
 
 Now we must verify that we wish to retain these changes.
 
 <img src="images/abcFileChangedKeep.png" alt="keep the file" width="400"/>  
 <img src="images/abcFileChangedDone.png" alt="agree and done" width="400"/>  
 
-Now close the file before proceeding.
+Now close the file before proceeding so that its no longer open in the eclipse Editor.
 
 
 Note: Here we have demonstrated Agentic LLM based workflow orchestration.   
@@ -1200,7 +1222,7 @@ Now we must verify that we wish to retain these changes.
 <img src="images/cartFileChangedKeep.png" alt="keep the file" width="400"/>  
 <img src="images/cartFileChangedDone.png" alt="agree and done" width="400"/>  
 
-Now close the file before proceeding.
+Now close the file before proceeding so that its no longer open in eclipse editors.
 
 
 | workspace without MCP server code|
