@@ -40,6 +40,7 @@ import org.springframework.http.MediaType;
 @SpringBootApplication
 @EnableConfigurationProperties(McpLoggingProperties.class)
 public class MyMcpServerApplication {
+	
 	private static final Logger logger = LoggerFactory.getLogger(StoreToolsProvider.class);
 
 	private FileOutputStream fos;
@@ -63,9 +64,9 @@ public class MyMcpServerApplication {
 		PrintStream originalOutputStream = System.out;
 		InputStream originalInputStream = System.in;
 
-		fos = new FileOutputStream(new File(dir, "out.txt"));
-		fis = new FileOutputStream(new File(dir, "in.txt"));
-		fcs = new FileOutputStream(new File(dir, "combined.txt"));
+		fos = new FileOutputStream(new File(dir, mcpLoggingProperties.outFileName()));
+		fis = new FileOutputStream(new File(dir, mcpLoggingProperties.outFileName()));
+		fcs = new FileOutputStream(new File(dir, mcpLoggingProperties.combinedFileName()));
 		TeeOutputStream to = new TeeOutputStream(originalOutputStream, new TeeOutputStream(fos, fcs));
 		PrintStream ps = new PrintStream(to);
 
