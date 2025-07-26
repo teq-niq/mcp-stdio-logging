@@ -82,11 +82,6 @@ public class MyMcpServerApplication {
 		IOUtils.closeQuietly(fcs);
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyMcpServerApplication.class, args);
-	}
-
-
 	@Bean
 	public ToolCallbackProvider brandZTools(StoreToolsProvider storeToolsProvider, StoreResourceNowToolsProvider storeResourceNowToolsProvider) {
 		return MethodToolCallbackProvider.builder().toolObjects(storeToolsProvider, storeResourceNowToolsProvider).build();
@@ -141,4 +136,7 @@ public class MyMcpServerApplication {
 		return SpringAiMcpAnnotationProvider.createSyncCompleteSpecifications(List.of(storeMcpCompleteProvider));
 	}
 
+	public static void main(String[] args) {
+		SpringApplication.run(MyMcpServerApplication.class, args);
+	}
 }
