@@ -6,4 +6,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author bnasslahsen
  */
 @ConfigurationProperties(prefix = "mcp.logging")
-public record McpLoggingProperties(String path) {}
+public record McpLoggingProperties(String path, String countriesFileName) {}
