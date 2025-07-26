@@ -1,7 +1,6 @@
 package com.eg.mcp.utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -11,9 +10,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.springframework.core.io.ClassPathResource;
-
 import jakarta.annotation.PostConstruct;
+
+import org.springframework.core.io.ClassPathResource;
 
 public class CountryPromptDatabase {
 	private final Map<String, Set<String>> countryDatabase = new TreeMap<>();
@@ -48,7 +47,7 @@ public class CountryPromptDatabase {
 	        }
 	}
 	
-	 private Set<String> loadCountries(BufferedReader reader) throws IOException {
+	 private Set<String> loadCountries(BufferedReader reader) {
 	        return reader.lines()
 	                .flatMap(line -> Arrays.stream(line.split(","))) // handle commas across lines
 	                .map(String::trim)
