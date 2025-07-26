@@ -14,7 +14,9 @@ import java.util.stream.Collectors;
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CountryPromptDatabase {
 	
 	private final Map<String, Set<String>> countryDatabase = new TreeMap<>();

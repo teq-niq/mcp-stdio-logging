@@ -34,6 +34,8 @@ import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Implementation of the MCP Stdio transport provider for servers that communicates using
  * standard input/output streams. Messages are exchanged as newline-delimited JSON-RPC
@@ -41,6 +43,7 @@ import reactor.core.scheduler.Schedulers;
  *
  * @author Christian Tzolov
  */
+@Component
 public class MyStdioServerTransportProvider implements McpServerTransportProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyStdioServerTransportProvider.class);
