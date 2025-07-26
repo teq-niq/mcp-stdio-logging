@@ -14,7 +14,4 @@ public record Cart(List<OrderItem> orderItems, float total, String currency) {
         total = computedTotal;
     }
     
-    public String formattedPrice() {
-        return total +currency;
-    }
 }
