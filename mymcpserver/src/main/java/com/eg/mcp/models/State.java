@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class State {
-	
+
 	private final Map<String, Integer> cart = new HashMap<>();
+
 	private static final String currency = "USD";
 
 	public Order toOrder() {
@@ -81,7 +85,7 @@ public class State {
 		}
 
 	}
-		
+
 	public void removeFromCart(String itemName) {
 		SportsItem sportsItem = SportsItem.labelOf(itemName);
 		if (sportsItem != null) {

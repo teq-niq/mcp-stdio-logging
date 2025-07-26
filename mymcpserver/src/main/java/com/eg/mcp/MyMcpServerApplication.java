@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eg.mcp.models.State;
 import com.eg.mcp.providers.others.StoreMcpCompleteProvider;
 import com.eg.mcp.providers.others.StoreMcpPromptProvider;
 import com.eg.mcp.providers.others.StoreMcpResourceProvider;
@@ -41,7 +40,7 @@ import org.springframework.http.MediaType;
 @EnableConfigurationProperties(McpLoggingProperties.class)
 public class MyMcpServerApplication {
 	
-	private static final Logger logger = LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(MyMcpServerApplication.class);
 
 	private FileOutputStream fos;
 
@@ -74,11 +73,6 @@ public class MyMcpServerApplication {
 		System.setOut(ps);
 		System.setIn(ti);
 
-	}
-
-	@Bean
-	public State state() {
-		return new State();
 	}
 
 	@PreDestroy
@@ -124,8 +118,6 @@ public class MyMcpServerApplication {
 		);
 		logger.debug("Adding faqs ");
 		var resourceSpecification = new McpServerFeatures.SyncResourceSpecification(mcpResource, (exchange, request) -> {
-
-
 			return new McpSchema.ReadResourceResult(List.of(
 					new McpSchema.TextResourceContents(
 							request.uri(),
