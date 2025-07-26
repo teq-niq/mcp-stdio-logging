@@ -7,10 +7,14 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
 /*
  * Just a quick Mapper.
  * If it breaks please fix yourself.
  */
+@Component
 public class MarkdownMapper {
 
     public String writeValueAsString(Object obj) {
