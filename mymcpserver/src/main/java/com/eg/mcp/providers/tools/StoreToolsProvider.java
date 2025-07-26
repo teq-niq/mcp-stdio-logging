@@ -17,7 +17,7 @@ public class StoreToolsProvider {
 	
 	
 	
-	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	private State state;
 	public StoreToolsProvider(State state) {
 		super();
