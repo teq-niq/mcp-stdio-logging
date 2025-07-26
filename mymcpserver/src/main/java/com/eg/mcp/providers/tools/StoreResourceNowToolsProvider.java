@@ -23,7 +23,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 @Service
 public class StoreResourceNowToolsProvider {
-	private static Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
 	@Value("${server.port:8080}")
 	private int serverPort = 8080;
 

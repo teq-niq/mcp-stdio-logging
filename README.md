@@ -288,7 +288,7 @@ import jakarta.annotation.PreDestroy;
 
 @SpringBootApplication
 public class MyMcpServerApplication {
-	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	
 	private FileOutputStream fos;
 	private FileOutputStream fis;
@@ -436,7 +436,7 @@ public class StoreToolsProvider {
 	
 	
 	
-	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	private State state;
 	public StoreToolsProvider(State state) {
 		super();
@@ -919,7 +919,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 @Service
 public class StoreResourceNowToolsProvider {
-	private static Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
 	@Value("${server.port:8080}")
 	private int serverPort = 8080;
 

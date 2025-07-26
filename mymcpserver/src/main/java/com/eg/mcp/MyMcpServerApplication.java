@@ -40,7 +40,7 @@ import org.springframework.http.MediaType;
 @SpringBootApplication
 @EnableConfigurationProperties(McpLoggingProperties.class)
 public class MyMcpServerApplication {
-	private static Logger logger = LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(StoreToolsProvider.class);
 
 	private FileOutputStream fos;
 
