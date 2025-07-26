@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eg.mcp.utils.McpLoggingProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.TeeInputStream;
 import org.apache.commons.io.output.TeeOutputStream;
@@ -17,6 +18,7 @@ import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 
@@ -40,20 +42,26 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 @SpringBootApplication
+@EnableConfigurationProperties(McpLoggingProperties.class)
 public class MyMcpServerApplication {
 	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	
 	private FileOutputStream fos;
 	private FileOutputStream fis;
 	private FileOutputStream fcs;
-	
+
+	private final McpLoggingProperties mcpLoggingProperties;
+
+	public MyMcpServerApplication(McpLoggingProperties mcpLoggingProperties) {
+		this.mcpLoggingProperties = mcpLoggingProperties;
+	}
 	
 	@PostConstruct
 	private void open() throws FileNotFoundException
 	{
 		//just ensure path is there and accessible
 		//follow better practices to avoid hardcoding
-		File dir= new File("d:/temp");
+		File dir= new File(mcpLoggingProperties.path());
 		
 		PrintStream originalOutputStream=System.out;
 		InputStream originalInputStream=System.in;
