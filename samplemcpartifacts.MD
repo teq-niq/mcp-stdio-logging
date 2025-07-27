@@ -28,7 +28,7 @@ mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreToolsProvider.java
 ## Tools that were initially planned as Resources   
 
 Found here:  
-mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreResourceNowToolsProvider.java
+mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreResourceNowToolsProvider.java   
 
 | Tool name     | Description                            |
 |---------------|----------------------------------------|
@@ -45,6 +45,21 @@ mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreResourceNowToolsProvid
 
 
 ## Resources
+
+Found here: 
+/mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpResourceProvider.java   
+
+@McpResource was used for this.  
+
+| URI           | Name         | Description          |
+|---------------|--------------|----------------------|
+| mcp://brandz/store/rules  | store_rules | return content of store rules in plain text |
+
+@McpResource was NOT used for this.  
+
+| URI           | Name         | Description          |
+|---------------|--------------|----------------------|
+| mcp://brandz/store/faqs  | store_faqs | content of store faqs in plain text |
 
 ## Prompts
 
