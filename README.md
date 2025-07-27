@@ -1241,23 +1241,24 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.5</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>mymcpclient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Spring AI - Model Context Protocol - Client Sample</name>
 	<description>Simple AI Application using MCP client sample</description>
-	
+
 	<properties>
 		<java.version>24</java.version>
+		<spring-ai.version>1.0.0</spring-ai.version>
 	</properties>
 
 	<dependencyManagement>
@@ -1265,7 +1266,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 			<dependency>
 				<groupId>org.springframework.ai</groupId>
 				<artifactId>spring-ai-bom</artifactId>
-				<version>1.1.0-SNAPSHOT</version>
+				<version>${spring-ai.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -1273,12 +1274,10 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 	</dependencyManagement>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-mcp-client</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -1289,38 +1288,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<name>Central Portal Snapshots</name>
-			<id>central-portal-snapshots</id>
-			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-
+	
 </project>
 ```
 
@@ -1330,7 +1298,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 {
   "mcpServers": {
     "brand-r-sports-store": {
-      "command": "D:/dev/pub/java/jdk-22.0.2/bin/java",
+      "command": "D:/dev/pub/java/jdk-24.0.2/bin/java",
       "args": [
         "-jar",
         "D:/my-mcp-server-dist/mymcpserver-0.0.1-SNAPSHOT.jar"
@@ -1350,12 +1318,6 @@ package com.eg.mcp;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.spec.McpSchema.CompleteRequest;
 import io.modelcontextprotocol.spec.McpSchema.CompleteResult;
@@ -1367,7 +1329,13 @@ import io.modelcontextprotocol.spec.McpSchema.ListToolsResult;
 import io.modelcontextprotocol.spec.McpSchema.PromptReference;
 import io.modelcontextprotocol.spec.McpSchema.ReadResourceRequest;
 import io.modelcontextprotocol.spec.McpSchema.ReadResourceResult;
- 
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
 @SpringBootApplication
 public class MyMcpClientApplication {
 
@@ -1378,52 +1346,42 @@ public class MyMcpClientApplication {
 
 	@Bean
 	public CommandLineRunner demo(List<McpSyncClient> mcpSyncClients, ConfigurableApplicationContext context) {
-		
 		return args -> {
-			
-			
-			if(mcpSyncClients.size()==1)
-			{
-				McpSyncClient client = mcpSyncClients.get(0);
-				
+			if (mcpSyncClients.size() == 1) {
+				McpSyncClient client = mcpSyncClients.getFirst();
 				ListToolsResult toolsList = client.listTools();
 				System.out.println("Available Tools = " + toolsList);
-				toolsList.tools().stream().forEach(tool -> {
+				toolsList.tools().forEach(tool -> {
 					System.out.println("Tool: " + tool.name() + ", description: " + tool.description() + ", schema: "
 							+ tool.inputSchema());
 				});
-				
+
 				ListResourcesResult listResources = client.listResources();
-				listResources.resources().forEach(resource->{
-					System.out.println("Resource: " +resource.name()+", "+resource.uri()+", "+resource.description());
+				listResources.resources().forEach(resource -> {
+					System.out.println("Resource: " + resource.name() + ", " + resource.uri() + ", " + resource.description());
 				});
 				ReadResourceResult resource = client.readResource(new ReadResourceRequest("mcp://brandz/store/rules"));
-			
 				System.out.println("result = " + resource);
-				
+
 				ListPromptsResult listPrompts = client.listPrompts();
-				listPrompts.prompts().forEach(prompt->{
-					System.out.println("Prompt: " +prompt.name()+", "+prompt.description());
+				listPrompts.prompts().forEach(prompt -> {
+					System.out.println("Prompt: " + prompt.name() + ", " + prompt.description());
 				});
 				GetPromptResult prompt = client.getPrompt(
 						new GetPromptRequest("brandz-greeting", Map.of("name", "Doe")));
 				System.out.println("result = " + prompt);
-				
+
 				// Completions
 				CompleteResult completion = client.completeCompletion(new CompleteRequest(new PromptReference("country-status"),
 						new CompleteRequest.CompleteArgument("countryName", "a")));
-			
 				System.out.println("Completion = " + completion);
-				
+
 				context.close();
-			
 			}
-			
 
 		};
 	}
 
-	
 }
 ```
 
@@ -1432,7 +1390,6 @@ public class MyMcpClientApplication {
 spring.application.name=mcp
 spring.main.web-application-type=none
 spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.json
-
 
 ```
 
@@ -1444,15 +1401,6 @@ In this   code am showing how a MCP client can use resources, prompts and comple
 
 I am not using a LLM here. We have already demonstrated LLM and MCP adequately.
 
-
-I have tried to use a freely available LLM and demonstrate the custom MCP client interaction.
-This LLM may not be as smart as GitHub Copilot. However, it is reasonably smart and available for free, with certain limitations.
-You can also checkout - https://console.groq.com/settings/billing
-
-Note that you might encounter a model_terms_required error, indicating that your organization's administrator needs to accept the terms of service at https://console.groq.com/playground?model=mistral-saba-24b. If you are doing the free trial the adminisitrator would be you only.
-
-Use this url to accept the terms.  
-https://console.groq.com/settings/model-terms
 
 
 
