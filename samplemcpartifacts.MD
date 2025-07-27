@@ -85,7 +85,7 @@ mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpCompleteProvider.j
 Have provided only a Prompt Completion. Have not provided a Resource Completion. Approach can be generally the same for both. The Prompt completion is for the prompt "country-status"     
 
 ## Notes
-All these above artifacts are registered or specified in mymcpserver/src/main/java/com/eg/mcp/MyMcpServerApplication.java.
-Class mymcpclient/src/main/java/com/eg/mcp/MyMcpClientApplication.java uses the resources, prompts and completions.  
+- All these above artifacts are registered or specified in mymcpserver/src/main/java/com/eg/mcp/MyMcpServerApplication.java.   
+- Class mymcpclient/src/main/java/com/eg/mcp/MyMcpClientApplication.java uses the resources, prompts and completions.  
 
 
