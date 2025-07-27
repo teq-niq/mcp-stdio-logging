@@ -2,6 +2,11 @@ package com.eg.mcp.providers.tools;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Service;
+
 import com.eg.mcp.models.Cart;
 import com.eg.mcp.models.Order;
 import com.eg.mcp.models.SportsItem;
@@ -10,12 +15,6 @@ import com.eg.mcp.utils.MarkdownMapper;
 import com.eg.mcp.utils.McpLoggingProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 /*
  * Initially was planning of making this a class for Resources and not Tools.
