@@ -1488,7 +1488,12 @@ I also hope you can see how this type of a application need not be just a consol
 
 Complete code is available here -- https://github.com/teq-niq/mcp-stdio-logging.git
 
+### Sample Tools, Resources, Prompts, Completions used here  
 
+[Sample MCP Artifacts](./samplemcpartifacts.MD "sample mcp artifacts") 
+
+
+  
 
 ### References:
 
