@@ -522,7 +522,7 @@ The complete code for this class won't be reproduced here; only the key changes 
 
 package com.eg.mcp.mytransport;
 
-
+@Component
 public class MyStdioServerTransportProvider implements McpServerTransportProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyStdioServerTransportProvider.class);
@@ -602,14 +602,9 @@ logger.debug("Sending JSON message: {}", jsonMessage);
 ```
 
 
-Remember we supplied our own bean as shown below in MyMcpServerApplication.java, which we discussed earlier
-```java
-@Bean
+MyStdioServerTransportProvider is decorated by @Component which causes it to becomes a bean.   
+This bean is used instead of io.modelcontextprotocol.server.transport.StdioServerTransportProvider.   
 
-	public McpServerTransportProvider stdioServerTransport() {
-		return new MyStdioServerTransportProvider();
-	}
-```
 
 This works because in org.springframework.ai.mcp.server.autoconfigure.McpServerAutoConfiguration we have this. 
 
@@ -690,7 +685,7 @@ Let's change the configuration to
 	"servers": {
 		"brand-z-sports-store": {
 			"type": "stdio",
-			"command": "D:/dev/pub/java/jdk-22.0.2/bin/java",
+			"command": "D:/dev/pub/java/jdk-24.0.2/bin/java",
 			"args": [
 				"-jar",
 				"D:/my-mcp-server-dist/mymcpserver-0.0.1-SNAPSHOT.jar"
@@ -708,7 +703,7 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
-As I went about coding the number of tools actually increased.  
+As I went about coding the number of tools actually increased than what you can see listed here.  
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
