@@ -696,6 +696,8 @@ Let's change the configuration to
 }
 ```
 <img src="images/copilot-config2.png" alt="Edit MCP Server Configurations" width="600"/>  
+The image might show jdk 22 but It have upgrdaed my jdk to jdk 24 as shown in the json.   
+
 
 Press "Apply and close" button.
 
@@ -704,6 +706,7 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
 As I went about coding the number of tools actually increased than what you can see listed here.  
+Also The image might show jdk 22 but It have upgrdaed my jdk to jdk 24.
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
