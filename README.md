@@ -659,7 +659,7 @@ Here search for "Github Copilot" and press the "Go" Button.
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
 Press the install button and carry out the remaining steps.   
 0.8.0 was the version available at the time of writing this.  
-0.9.2 is available now and behaves mostly the same for the purpose of this article.   
+0.9.3 is available now and behaves mostly the same for the purpose of this article.   
 
 #### Github Copilot eclipse plugin configuration
 
@@ -696,7 +696,7 @@ Let's change the configuration to
 }
 ```
 <img src="images/copilot-config2.png" alt="Edit MCP Server Configurations" width="600"/>  
-The image might show jdk 22 but It have upgrdaed my jdk to jdk 24 as shown in the json.   
+   
 
 
 Press "Apply and close" button.
