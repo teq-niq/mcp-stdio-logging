@@ -6,10 +6,9 @@
   <packaging>pom</packaging>
 
   <modules>
-  	
   	<module>mymcplient</module>
   	<module>mymcpserver</module>
- 
   	<module>image-server</module>
   </modules>
+	
 </project>
