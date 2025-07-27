@@ -96,7 +96,7 @@ public class MyMcpServerApplication {
 
 		List<SyncResourceSpecification> otherResourceSpecifications = SpringAiMcpAnnotationProvider.createSyncResourceSpecifications(List.of(storeMcpResourceProvider));
 		for (SyncResourceSpecification otherResourceSpecification : otherResourceSpecifications) {
-			logger.debug("Adding MCP resource " + otherResourceSpecification.resource().name());
+			logger.debug("Adding MCP resource {}", otherResourceSpecification.resource().name());
 			specifications.add(otherResourceSpecification);
 		}
 
