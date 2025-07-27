@@ -31,7 +31,6 @@ public class StoreToolsProvider {
 
 	@Tool(name = "get_items", description = "Get a list of sports equipments or sporting goods that Brand Z Sports store sells.")
 	public List<String> getSportsEquipments() {
-		logger.info("check if log is working");
 		List<String> labels = Arrays.stream(SportsItem.values())
 				.map(SportsItem::label)
 				.collect(Collectors.toList());
