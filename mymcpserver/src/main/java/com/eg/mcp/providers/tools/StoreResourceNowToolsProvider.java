@@ -29,9 +29,6 @@ public class StoreResourceNowToolsProvider {
 
 	private static final String RETURNS = "Returns the URL of the image of the ";
 
-	@Value("${mine.mcpurl:false}")
-	private boolean mineMcpurl = false;
-
 	private final ObjectMapper jsonMapper;
 
 	private final XmlMapper xmlMapper;
@@ -114,8 +111,7 @@ public class StoreResourceNowToolsProvider {
 	}
 
 	private String mduri(SportsItem sportsItem) {
-		return mineMcpurl ? "mcp://resource/" + sportsItem.touri()
-				: mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
+		return  mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
 	}
 
 }

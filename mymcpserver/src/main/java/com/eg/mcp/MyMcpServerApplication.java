@@ -57,14 +57,14 @@ public class MyMcpServerApplication {
 	@PostConstruct
 	private void open() throws FileNotFoundException {
 		//just ensure path is there and accessible
-		//follow better practices to avoid hardcoding
+		//follow best practices to avoid hardcoding
 		File dir = new File(mcpLoggingProperties.path());
 
 		PrintStream originalOutputStream = System.out;
 		InputStream originalInputStream = System.in;
 
 		fos = new FileOutputStream(new File(dir, mcpLoggingProperties.outFileName()));
-		fis = new FileOutputStream(new File(dir, mcpLoggingProperties.outFileName()));
+		fis = new FileOutputStream(new File(dir, mcpLoggingProperties.inFileName()));
 		fcs = new FileOutputStream(new File(dir, mcpLoggingProperties.combinedFileName()));
 		TeeOutputStream to = new TeeOutputStream(originalOutputStream, new TeeOutputStream(fos, fcs));
 		PrintStream ps = new PrintStream(to);
