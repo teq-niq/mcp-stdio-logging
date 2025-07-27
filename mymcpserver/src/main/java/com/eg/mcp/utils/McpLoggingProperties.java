@@ -8,4 +8,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "mcp.logging")
 public record McpLoggingProperties(String path, String countriesFileName,
 								   String inFileName, String outFileName,
-								   String combinedFileName) {}
+								   String combinedFileName, String imagesServerUrl) {}

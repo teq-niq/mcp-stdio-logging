@@ -6,14 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eg.mcp.utils.McpLoggingProperties;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class State {
 
 	private final Map<String, Integer> cart = new HashMap<>();
-
 	private static final String currency = "USD";
+
+	private final McpLoggingProperties mcpLoggingProperties;
+
+	public State(McpLoggingProperties mcpLoggingProperties) {
+		this.mcpLoggingProperties = mcpLoggingProperties;
+	}
 
 	public Order toOrder() {
 		List<OrderItem> items = toOrderItems(currency);
@@ -29,7 +36,6 @@ public class State {
 	public Cart toCart() {
 		List<OrderItem> items = toOrderItems(currency);
 		return new Cart(
-
 				items,
 				0f, // total will be recomputed in Order constructor
 				currency
@@ -46,7 +52,7 @@ public class State {
 			if (item != null) {
 				float rate = item.price();
 				float cost = rate * quantity;
-				items.add(new OrderItem(item.label(), quantity, rate, cost, "http://localhost:8080/images/" + item.touri(), currency));
+				items.add(new OrderItem(item.label(), quantity, rate, cost, mcpLoggingProperties.imagesServerUrl() + item.touri(), currency));
 			}
 		}
 		return items;
@@ -65,9 +71,9 @@ public class State {
 	}
 
 	public Order getLastOrder() {
-		Order lastOrder = null;
-		if (orderHistory.size() > 0) {
-			lastOrder = orderHistory.get(orderHistory.size() - 1);
+		Order lastOrder;
+		if (!orderHistory.isEmpty()) {
+			lastOrder = orderHistory.getLast();
 		}
 		else {
 			throw new RuntimeException("There is no order history yet");

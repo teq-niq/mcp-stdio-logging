@@ -7,6 +7,7 @@ import com.eg.mcp.models.Order;
 import com.eg.mcp.models.SportsItem;
 import com.eg.mcp.models.State;
 import com.eg.mcp.utils.MarkdownMapper;
+import com.eg.mcp.utils.McpLoggingProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
@@ -28,9 +29,6 @@ public class StoreResourceNowToolsProvider {
 
 	private static final String RETURNS = "Returns the URL of the image of the ";
 
-	@Value("${server.port:8080}")
-	private int serverPort;
-
 	@Value("${mine.mcpurl:false}")
 	private boolean mineMcpurl = false;
 
@@ -42,11 +40,14 @@ public class StoreResourceNowToolsProvider {
 
 	private final State state;
 
-	public StoreResourceNowToolsProvider(ObjectMapper jsonMapper, XmlMapper xmlMapper, State state) {
+	private final McpLoggingProperties mcpLoggingProperties;
+
+	public StoreResourceNowToolsProvider(ObjectMapper jsonMapper, State state, McpLoggingProperties mcpLoggingProperties) {
 		super();
 		this.jsonMapper = jsonMapper;
-		this.xmlMapper = xmlMapper;
+		this.mcpLoggingProperties = mcpLoggingProperties;
 		this.state = state;
+		this.xmlMapper = XmlMapper.builder().build();
 		this.markdownMapper = new MarkdownMapper();
 	}
 
@@ -114,7 +115,7 @@ public class StoreResourceNowToolsProvider {
 
 	private String mduri(SportsItem sportsItem) {
 		return mineMcpurl ? "mcp://resource/" + sportsItem.touri()
-				: "http://localhost:" + serverPort + "/images/" + sportsItem.touri();
+				: mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
 	}
 
 }
