@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StoreMcpCompleteProvider {
 
-	private CountryPromptDatabase countryPromptDatabase;
+	private final CountryPromptDatabase countryPromptDatabase;
 
 	public StoreMcpCompleteProvider(CountryPromptDatabase countryPromptDatabase) {
 		this.countryPromptDatabase = countryPromptDatabase;
@@ -25,7 +25,7 @@ public class StoreMcpCompleteProvider {
 		}
 		String prefix = countryPrefix.toLowerCase();
 		Set<String> countries = countryPromptDatabase.getCountryDatabase().get(prefix);
-		if (countries == null || countries.size() == 0) {
+		if (countries == null || countries.isEmpty()) {
 			return List.of(countryPrefix + " does not resolve to any country name or its begining");
 		}
 		return new ArrayList<>(countries);
