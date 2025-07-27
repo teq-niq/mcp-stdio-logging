@@ -16,7 +16,7 @@
 	<description>mymcpserver</description>
 
 	<properties>
-		<java.version>22</java.version>
+		<java.version>24</java.version>
 		<spring-ai.version>1.0.0</spring-ai.version>
 	</properties>
 

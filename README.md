@@ -160,7 +160,7 @@ The whole code will be shared towards the end.
 	<description>mymcpserver</description>
 
 	<properties>
-		<java.version>22</java.version>
+		<java.version>24</java.version>
 		<spring-ai.version>1.0.0</spring-ai.version>
 	</properties>
 
@@ -1325,7 +1325,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 	<description>Simple AI Application using MCP client sample</description>
 	
 	<properties>
-		<java.version>22</java.version>
+		<java.version>24</java.version>
 	</properties>
 
 	<dependencyManagement>
