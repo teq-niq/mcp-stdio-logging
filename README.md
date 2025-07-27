@@ -706,12 +706,11 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
 As I went about coding the number of tools actually increased than what you can see listed here.  
-Also The image might show jdk 22 but It have upgrdaed my jdk to jdk 24.
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.2 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.3 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
 
 
 ### Checking the logs
