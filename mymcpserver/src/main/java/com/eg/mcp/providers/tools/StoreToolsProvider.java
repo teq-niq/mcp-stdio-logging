@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eg.mcp.models.SportsItem;
-import com.eg.mcp.models.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
+
+import com.eg.mcp.models.SportsItem;
+import com.eg.mcp.models.State;
 
 @Service
 public class StoreToolsProvider {
@@ -31,7 +31,6 @@ public class StoreToolsProvider {
 
 	@Tool(name = "get_items", description = "Get a list of sports equipments or sporting goods that Brand Z Sports store sells.")
 	public List<String> getSportsEquipments() {
-		logger.info("check if log is working");
 		List<String> labels = Arrays.stream(SportsItem.values())
 				.map(SportsItem::label)
 				.collect(Collectors.toList());

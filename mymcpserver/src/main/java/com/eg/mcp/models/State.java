@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eg.mcp.utils.McpLoggingProperties;
-
 import org.springframework.stereotype.Component;
+
+import com.eg.mcp.utils.McpLoggingProperties;
 
 @Component
 public class State {

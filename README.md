@@ -123,7 +123,7 @@ You can use any other language, IDE and carry out the same experiments.
 
 That said I am using
 - Spring Tools for Eclipse
-- Java 22
+- Java 24
 - Maven  
 
 I originally began this writeup to explore various techniques for debugging the stdio logging of MCP JSON within the context of Spring AI and MCP. Along the way, I also touched on several core MCP concepts that are relevant beyond just logging. Even if teeing seems unnecessary in your current setup, understanding the concept can still prove useful in other contexts. The hope is that—even if your stack looks different—the ideas and patterns discussed here will still resonate and map cleanly to your environment.   
@@ -144,14 +144,14 @@ The whole code will be shared towards the end.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>mymcpserver</artifactId>
@@ -165,32 +165,28 @@ The whole code will be shared towards the end.
 	</properties>
 
 	<dependencies>
-	
-<dependency>
-<groupId>org.springframework.ai</groupId>
-<artifactId>spring-ai-starter-mcp-server</artifactId>
-
-</dependency>
-
-	<dependency>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.19.0</version>
-</dependency>
-<dependency>
-            <groupId>com.logaritex.mcp</groupId>
-            <artifactId>spring-ai-mcp-annotations</artifactId>
-            <version>0.1.0</version>
-        </dependency>
-        <dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-xml</artifactId>
-</dependency>
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-mcp-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.logaritex.mcp</groupId>
+			<artifactId>spring-ai-mcp-annotations</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -213,7 +209,6 @@ The whole code will be shared towards the end.
 			</plugin>
 		</plugins>
 	</build>
-	
 
 </project>
 ```
@@ -226,21 +221,30 @@ spring.ai.mcp.server.version=0.0.1
 
 #STDIO will work if banner is disabled
 spring.main.banner-mode=off
-#Empty to suppress default Spring Boot console logging, important for stdio transport.
 logging.pattern.console= 
+
+
 #just ensure below path is there and accessible
-logging.file.name=d:/temp/logs/spring.log
+mine.mcp.logging.path=/tmp/logs
+mine.mcp.logging.countries-file-name=countries.txt
+mine.mcp.logging.combined-file-name=combined.txt
+mine.mcp.logging.in-file-name=in.txt
+mine.mcp.logging.out-file-name=out.txt
+mine.mcp.logging.images-server-url=http://localhost:8080/images/
+
+
+## Model Context Protocol Server Configuration
+logging.file.name=${mine.mcp.logging.path}/spring.log
 logging.level.root=ERROR
 logging.level.io.modelcontextprotocol.server.transport=DEBUG
 logging.level.com.eg.mcp.mytransport=DEBUG
-logging.level.com.eg.mcp=DEBUG
+#logging.level.com.eg.mcp=DEBUG
+logging.level.com.eg.mcp.providers.tools=DEBUG
 #logging.level.io.modelcontextprotocol.spec=DEBUG
 
 
-
-mine.mcpurl=false
-
 ```
+
 Do remember to use existing and reachable locations for the logging file.   
 
 #### MyMcpServerApplication.java
@@ -255,160 +259,137 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.TeeInputStream;
-import org.apache.commons.io.output.TeeOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.ai.tool.method.MethodToolCallbackProvider;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.MediaType;
-
-import com.eg.mcp.models.State;
-import com.eg.mcp.mytransport.MyStdioServerTransportProvider;
 import com.eg.mcp.providers.others.StoreMcpCompleteProvider;
 import com.eg.mcp.providers.others.StoreMcpPromptProvider;
 import com.eg.mcp.providers.others.StoreMcpResourceProvider;
 import com.eg.mcp.providers.tools.StoreResourceNowToolsProvider;
 import com.eg.mcp.providers.tools.StoreToolsProvider;
-import com.eg.mcp.utils.CountryPromptDatabase;
+import com.eg.mcp.utils.McpLoggingProperties;
 import com.logaritex.mcp.spring.SpringAiMcpAnnotationProvider;
-
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpServerFeatures.SyncCompletionSpecification;
 import io.modelcontextprotocol.server.McpServerFeatures.SyncPromptSpecification;
 import io.modelcontextprotocol.server.McpServerFeatures.SyncResourceSpecification;
 import io.modelcontextprotocol.spec.McpSchema;
-import io.modelcontextprotocol.spec.McpServerTransportProvider;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.TeeInputStream;
+import org.apache.commons.io.output.TeeOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 
 @SpringBootApplication
+@EnableConfigurationProperties(McpLoggingProperties.class)
 public class MyMcpServerApplication {
-	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	
+	private static final Logger logger = LoggerFactory.getLogger(MyMcpServerApplication.class);
+
 	private FileOutputStream fos;
+
 	private FileOutputStream fis;
+
 	private FileOutputStream fcs;
-	
-	
+
+	private final McpLoggingProperties mcpLoggingProperties;
+
+	public MyMcpServerApplication(McpLoggingProperties mcpLoggingProperties) {
+		this.mcpLoggingProperties = mcpLoggingProperties;
+	}
+
 	@PostConstruct
-	private void open() throws FileNotFoundException
-	{
+	private void open() throws FileNotFoundException {
 		//just ensure path is there and accessible
-		//follow better practices to avoid hardcoding
-		File dir= new File("d:/temp");
-		
-		PrintStream originalOutputStream=System.out;
-		InputStream originalInputStream=System.in;
-		
-		fos= new FileOutputStream(new File(dir, "out.txt"));
-		fis= new FileOutputStream(new File(dir, "in.txt"));
-		fcs= new FileOutputStream(new File(dir, "combined.txt"));
-		TeeOutputStream to= new TeeOutputStream(originalOutputStream, new TeeOutputStream(fos, fcs));
-		PrintStream ps= new PrintStream(to);
-		
-		TeeInputStream ti= new TeeInputStream(originalInputStream, new TeeOutputStream(fis, fcs));
+		//follow best practices to avoid hardcoding
+		File dir = new File(mcpLoggingProperties.path());
+
+		PrintStream originalOutputStream = System.out;
+		InputStream originalInputStream = System.in;
+
+		fos = new FileOutputStream(new File(dir, mcpLoggingProperties.outFileName()));
+		fis = new FileOutputStream(new File(dir, mcpLoggingProperties.inFileName()));
+		fcs = new FileOutputStream(new File(dir, mcpLoggingProperties.combinedFileName()));
+		TeeOutputStream to = new TeeOutputStream(originalOutputStream, new TeeOutputStream(fos, fcs));
+		PrintStream ps = new PrintStream(to);
+
+		TeeInputStream ti = new TeeInputStream(originalInputStream, new TeeOutputStream(fis, fcs));
 		System.setOut(ps);
 		System.setIn(ti);
-		
-		
+
 	}
-	
-	@Bean 
-	public State state()
-	{
-		return new State();
-	}
-	
+
 	@PreDestroy
-	private void close()
-	{
+	private void close() {
 		IOUtils.closeQuietly(fos);
 		IOUtils.closeQuietly(fis);
 		IOUtils.closeQuietly(fcs);
 	}
-	
-	public static void main(String[] args) {
-		SpringApplication.run(MyMcpServerApplication.class, args);
-	}
-	
-	
-	
+
 	@Bean
 	public ToolCallbackProvider brandZTools(StoreToolsProvider storeToolsProvider, StoreResourceNowToolsProvider storeResourceNowToolsProvider) {
 		return MethodToolCallbackProvider.builder().toolObjects(storeToolsProvider, storeResourceNowToolsProvider).build();
 	}
-	
-	
-	
+
 
 	@Bean
 	public List<SyncResourceSpecification> brandZPlaceHolderResources(StoreMcpResourceProvider storeMcpResourceProvider
-			) {
+	) {
 		List<SyncResourceSpecification> specifications = new ArrayList<>();
 		createPlaceHolderFaqResource(specifications);
-		 
-		 List<SyncResourceSpecification> otherResourceSpecifications = SpringAiMcpAnnotationProvider.createSyncResourceSpecifications(List.of(storeMcpResourceProvider));
-	  for (SyncResourceSpecification otherResourceSpecification : otherResourceSpecifications) {
-		  logger.debug("Adding MCP resource "+otherResourceSpecification.resource().name());
-		  specifications.add(otherResourceSpecification);
-	}
-	   
-	    return specifications;
+
+		List<SyncResourceSpecification> otherResourceSpecifications = SpringAiMcpAnnotationProvider.createSyncResourceSpecifications(List.of(storeMcpResourceProvider));
+		for (SyncResourceSpecification otherResourceSpecification : otherResourceSpecifications) {
+			logger.debug("Adding MCP resource {}", otherResourceSpecification.resource().name());
+			specifications.add(otherResourceSpecification);
+		}
+
+		return specifications;
 	}
 
 	private void createPlaceHolderFaqResource(List<SyncResourceSpecification> specifications) {
 		McpSchema.Resource mcpResource = new McpSchema.Resource(
-    		    "mcp://brandz/store/faqs",                            // URI for MCP to reference
-    		    "store_faqs",                          // Name (for UI)
-    		    "content of store faqs in plain text",            // Description (for LLM)
-    		    MediaType.TEXT_PLAIN_VALUE,                                  // MIME type
-    		    null                                           // Optional annotations
-    		);
-        logger.debug("Adding faqs ");
-        var resourceSpecification = new McpServerFeatures.SyncResourceSpecification(mcpResource, (exchange, request) -> {
-	
-	        	
-	        	 return new McpSchema.ReadResourceResult(List.of(
-	                        new McpSchema.TextResourceContents(
-	                            request.uri(),
-	                            MediaType.TEXT_PLAIN_VALUE,
-	                            "placeholder faq"
-	                        )
-	                    ));
-	      
-	    });
-        specifications.add(resourceSpecification);
+				"mcp://brandz/store/faqs",                            // URI for MCP to reference
+				"store_faqs",                          // Name (for UI)
+				"content of store faqs in plain text",            // Description (for LLM)
+				MediaType.TEXT_PLAIN_VALUE,                                  // MIME type
+				null                                           // Optional annotations
+		);
+		logger.debug("Adding faqs ");
+		var resourceSpecification = new McpServerFeatures.SyncResourceSpecification(mcpResource, (exchange, request) -> {
+			return new McpSchema.ReadResourceResult(List.of(
+					new McpSchema.TextResourceContents(
+							request.uri(),
+							MediaType.TEXT_PLAIN_VALUE,
+							"placeholder faq"
+					)
+			));
+
+		});
+		specifications.add(resourceSpecification);
 
 	}
-	
+
 	@Bean
 	public List<SyncPromptSpecification> promptSpecs(StoreMcpPromptProvider storeMcpPromptProvider) {
 		return SpringAiMcpAnnotationProvider.createSyncPromptSpecifications(List.of(storeMcpPromptProvider));
 	}
-	
+
 	@Bean
 	public List<SyncCompletionSpecification> completionSpecs(StoreMcpCompleteProvider storeMcpCompleteProvider) {
 		return SpringAiMcpAnnotationProvider.createSyncCompleteSpecifications(List.of(storeMcpCompleteProvider));
 	}
-	
-	
-	@Bean
 
-	public McpServerTransportProvider stdioServerTransport() {
-		return new MyStdioServerTransportProvider();
+	public static void main(String[] args) {
+		SpringApplication.run(MyMcpServerApplication.class, args);
 	}
-	
-	@Bean
-	public CountryPromptDatabase countryPromptDatabase()
-	{
-		return new CountryPromptDatabase();
-	}
-
 }
 
 
@@ -423,116 +404,93 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.stereotype.Service;
-
 import com.eg.mcp.models.SportsItem;
 import com.eg.mcp.models.State;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Service;
 
 @Service
 public class StoreToolsProvider {
 	
+	private static final Logger logger = LoggerFactory.getLogger(StoreToolsProvider.class);
+
+	private final State state;
 	
-	
-	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
-	private State state;
 	public StoreToolsProvider(State state) {
 		super();
 		this.state = state;
-		
 	}
-	
-	
-	
 
-	
 	@Tool(name = "get_store_speciality", description = "Describe whats special or unique about Brand Z sports store")
-	public String getStoreSpeciality()
-	{
+	public String getStoreSpeciality() {
 		return "Brand Z Sports store only sells sports equipments or sporting goods that it manufactures";
 	}
 
 	@Tool(name = "get_items", description = "Get a list of sports equipments or sporting goods that Brand Z Sports store sells.")
-	public List<String> getSportsEquipments()
-	{
+	public List<String> getSportsEquipments() {
 		logger.info("check if log is working");
 		List<String> labels = Arrays.stream(SportsItem.values())
-                .map(SportsItem::label)
-                .collect(Collectors.toList());
+				.map(SportsItem::label)
+				.collect(Collectors.toList());
 		return labels;
 	}
+
 	@Tool(name = "get_selling_price_currency", description = "Get the currency for the various items selling price. Brand Z Sports store's selling price for an item would also be the same as the cost price of the item from a vendor's point of view.")
-	public String getSportsEquipmentSellingPriceCurrency()
-	{
+	public String getSportsEquipmentSellingPriceCurrency() {
 		return state.getCurrency();
 	}
-	
+
 	@Tool(name = "get_selling_price_of_item", description = "Get selling price of items that Brand Z Sports store sells. Is also the item's cost from buyers point of view")
-	public float getSellingPriceOfItem(String itemName)
-	{
+	public float getSellingPriceOfItem(String itemName) {
 		SportsItem sportsItem = SportsItem.labelOf(itemName);
-		Float price=null;
-		if(sportsItem!=null)
-		{
-			price=sportsItem.price();
+		Float price = null;
+		if (sportsItem != null) {
+			price = sportsItem.price();
 		}
-		
-		if(price==null)
-		{
-			throw new RuntimeException("Brand Z Sorts store does not stock "+itemName);
+
+		if (price == null) {
+			throw new RuntimeException("Brand Z Sorts store does not stock " + itemName);
 		}
 		return price;
 	}
-	
+
 	@Tool(name = "get_details_of_item", description = "Get details of items that Brand Z Sports store sells.")
-	public String getDetailOfItem(String itemName)
-	{
-		
+	public String getDetailOfItem(String itemName) {
+
 		SportsItem sportsItem = SportsItem.labelOf(itemName);
-		String detail=null;
-		if(sportsItem!=null)
-		{
-			detail=sportsItem.detail();
+		String detail = null;
+		if (sportsItem != null) {
+			detail = sportsItem.detail();
 		}
-		if(detail==null)
-		{
-			throw new RuntimeException("Brand Z Sports store does not stock "+itemName);
+		if (detail == null) {
+			throw new RuntimeException("Brand Z Sports store does not stock " + itemName);
 		}
 		return detail;
 	}
-	
-	
-	
+
 	@Tool(name = "add_to_cart_item", description = "Add to cart item by specifying item name and its quantity")
-	public void addToCart(String itemName, int quantity)
-	{
+	public void addToCart(String itemName, int quantity) {
+		logger.debug("addingTocart " + itemName + " with quantity=" + quantity);
 		state.addToCart(itemName, quantity);
-		
 	}
-	
+
 	@Tool(name = "change_quantity_of_cart_item", description = "Change the quantity of the specified cart item to specified quantity")
-	public void changeQuantityOfCartItem(String itemName, int quantity)
-	{
+	public void changeQuantityOfCartItem(String itemName, int quantity) {
 		state.changeQuantityOfCartItem(itemName, quantity);
-		
 	}
-	
+
 	@Tool(name = "remove_item_from_cart_completely", description = "Remove item  from cart item by specifying item name. Can think that its quantity was reduced to 0. Item will no longer occur in the cart.")
-	public void removeFromCart(String itemName)
-	{
+	public void removeFromCart(String itemName) {
 		state.removeFromCart(itemName);
-		
 	}
-	
+
 	@Tool(name = "checkout_and_pay", description = "Check out items in the cart. Payment is automatic. After checkout order is available as last order.")
-	public void checkout()
-	{
+	public void checkout() {
 		state.checkout();
-		
 	}
-	
 
 }
 
@@ -564,7 +522,7 @@ The complete code for this class won't be reproduced here; only the key changes 
 
 package com.eg.mcp.mytransport;
 
-
+@Component
 public class MyStdioServerTransportProvider implements McpServerTransportProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyStdioServerTransportProvider.class);
@@ -644,14 +602,9 @@ logger.debug("Sending JSON message: {}", jsonMessage);
 ```
 
 
-Remember we supplied our own bean as shown below in MyMcpServerApplication.java, which we discussed earlier
-```java
-@Bean
+MyStdioServerTransportProvider is decorated by @Component which causes it to becomes a bean.   
+This bean is used instead of io.modelcontextprotocol.server.transport.StdioServerTransportProvider.   
 
-	public McpServerTransportProvider stdioServerTransport() {
-		return new MyStdioServerTransportProvider();
-	}
-```
 
 This works because in org.springframework.ai.mcp.server.autoconfigure.McpServerAutoConfiguration we have this. 
 
@@ -732,7 +685,7 @@ Let's change the configuration to
 	"servers": {
 		"brand-z-sports-store": {
 			"type": "stdio",
-			"command": "D:/dev/pub/java/jdk-22.0.2/bin/java",
+			"command": "D:/dev/pub/java/jdk-24.0.2/bin/java",
 			"args": [
 				"-jar",
 				"D:/my-mcp-server-dist/mymcpserver-0.0.1-SNAPSHOT.jar"
@@ -743,6 +696,8 @@ Let's change the configuration to
 }
 ```
 <img src="images/copilot-config2.png" alt="Edit MCP Server Configurations" width="600"/>  
+The image might show jdk 22 but It have upgrdaed my jdk to jdk 24 as shown in the json.   
+
 
 Press "Apply and close" button.
 
@@ -750,7 +705,8 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
-As I went about coding the number of tools actually increased.  
+As I went about coding the number of tools actually increased than what you can see listed here.  
+Also The image might show jdk 22 but It have upgrdaed my jdk to jdk 24.
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
@@ -901,7 +857,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.eg.mcp.models.Cart;
@@ -909,6 +864,7 @@ import com.eg.mcp.models.Order;
 import com.eg.mcp.models.SportsItem;
 import com.eg.mcp.models.State;
 import com.eg.mcp.utils.MarkdownMapper;
+import com.eg.mcp.utils.McpLoggingProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -919,29 +875,31 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 @Service
 public class StoreResourceNowToolsProvider {
-	private static final Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
-	@Value("${server.port:8080}")
-	private int serverPort = 8080;
-
-	@Value("${mine.mcpurl:false}")
-	private boolean mineMcpurl = false;
-	private final ObjectMapper jsonMapper;
-	private final XmlMapper xmlMapper;
-	private final MarkdownMapper markdownMapper;
-	private State state;
-
-	public StoreResourceNowToolsProvider(State state) {
-		super();
-		this.state = state;
-		this.jsonMapper = new ObjectMapper();
-		this.xmlMapper = new XmlMapper(); // for XML
-		this.markdownMapper = new MarkdownMapper();
-	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
 
 	private static final String RETURNS = "Returns the URL of the image of the ";
 
-	@Tool(name = "get_tennis_ball_image", description = RETURNS + "tennis ball")
+	private final ObjectMapper jsonMapper;
 
+	private final XmlMapper xmlMapper;
+
+	private final MarkdownMapper markdownMapper;
+
+	private final State state;
+
+	private final McpLoggingProperties mcpLoggingProperties;
+
+	public StoreResourceNowToolsProvider(ObjectMapper jsonMapper, State state, McpLoggingProperties mcpLoggingProperties) {
+		super();
+		this.jsonMapper = jsonMapper;
+		this.mcpLoggingProperties = mcpLoggingProperties;
+		this.state = state;
+		this.xmlMapper = XmlMapper.builder().build();
+		this.markdownMapper = new MarkdownMapper();
+	}
+
+	@Tool(name = "get_tennis_ball_image", description = RETURNS + "tennis ball")
 	public String getTennisBallImage() {
 		return mduri(SportsItem.TENNIS_BALL);
 	}
@@ -962,59 +920,37 @@ public class StoreResourceNowToolsProvider {
 	}
 
 	@Tool(name = "get_cart_content_in_json", description = "get cart content formatted in json")
-
 	public String cartjson() throws IOException {
-
 		Cart cart = state.toCart();
-		String content = jsonMapper.writeValueAsString(cart);
-		return content;
+		return jsonMapper.writeValueAsString(cart);
 	}
 
 	@Tool(name = "get_cart_content_in_xml", description = "get cart content formatted in xml")
-
 	public String cartxml() throws IOException {
-
 		Cart cart = state.toCart();
-
-		String content = xmlMapper.writeValueAsString(cart);
-		return content;
-
+		return xmlMapper.writeValueAsString(cart);
 	}
 
 	@Tool(name = "get_cart_content_in_markdown", description = "get cart content formatted in markdown")
-
-	public String cartmd() throws IOException {
-
+	public String cartmd() {
 		Cart cart = state.toCart();
-
-		String content = markdownMapper.writeValueAsString(cart);
-		return content;
-
+		return markdownMapper.writeValueAsString(cart);
 	}
-	
+
 	@Tool(name = "get_last_order_content_in_json", description = "get last order content formatted in json")
-
 	public String lastorderjson() throws IOException {
-
 		Order lastOrder = state.getLastOrder();
-		String content = jsonMapper.writeValueAsString(lastOrder);
-		return content;
+		return jsonMapper.writeValueAsString(lastOrder);
 	}
 
 	@Tool(name = "get_last_order_content_in_xml", description = "get last order content formatted in xml")
-
 	public String lastorderxml() throws IOException {
-
 		Order lastOrder = state.getLastOrder();
-
-		String content = xmlMapper.writeValueAsString(lastOrder);
-		return content;
-
+		return xmlMapper.writeValueAsString(lastOrder);
 	}
 
 	@Tool(name = "get_last_order_content_in_markdown", description = "get last order content formatted in markdown")
-
-	public String lastordermd() throws IOException {
+	public String lastordermd() {
 		logger.debug("Entered lastordermd");
 		Order lastOrder = state.getLastOrder();
 		logger.debug("Got lastorder");
@@ -1024,13 +960,9 @@ public class StoreResourceNowToolsProvider {
 		return content;
 
 	}
-	
-	
 
 	private String mduri(SportsItem sportsItem) {
-
-		return mineMcpurl ? "mcp://resource/" + sportsItem.touri()
-				: "http://localhost:" + serverPort + "/images/" + sportsItem.touri();
+		return  mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
 	}
 
 }
@@ -1309,23 +1241,24 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.5</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>mymcpclient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Spring AI - Model Context Protocol - Client Sample</name>
 	<description>Simple AI Application using MCP client sample</description>
-	
+
 	<properties>
 		<java.version>24</java.version>
+		<spring-ai.version>1.0.0</spring-ai.version>
 	</properties>
 
 	<dependencyManagement>
@@ -1333,7 +1266,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 			<dependency>
 				<groupId>org.springframework.ai</groupId>
 				<artifactId>spring-ai-bom</artifactId>
-				<version>1.1.0-SNAPSHOT</version>
+				<version>${spring-ai.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -1341,12 +1274,10 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 	</dependencyManagement>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-mcp-client</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -1357,38 +1288,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<name>Central Portal Snapshots</name>
-			<id>central-portal-snapshots</id>
-			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-
+	
 </project>
 ```
 
@@ -1398,7 +1298,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 {
   "mcpServers": {
     "brand-r-sports-store": {
-      "command": "D:/dev/pub/java/jdk-22.0.2/bin/java",
+      "command": "D:/dev/pub/java/jdk-24.0.2/bin/java",
       "args": [
         "-jar",
         "D:/my-mcp-server-dist/mymcpserver-0.0.1-SNAPSHOT.jar"
@@ -1418,12 +1318,6 @@ package com.eg.mcp;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.spec.McpSchema.CompleteRequest;
 import io.modelcontextprotocol.spec.McpSchema.CompleteResult;
@@ -1435,7 +1329,13 @@ import io.modelcontextprotocol.spec.McpSchema.ListToolsResult;
 import io.modelcontextprotocol.spec.McpSchema.PromptReference;
 import io.modelcontextprotocol.spec.McpSchema.ReadResourceRequest;
 import io.modelcontextprotocol.spec.McpSchema.ReadResourceResult;
- 
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
 @SpringBootApplication
 public class MyMcpClientApplication {
 
@@ -1446,52 +1346,42 @@ public class MyMcpClientApplication {
 
 	@Bean
 	public CommandLineRunner demo(List<McpSyncClient> mcpSyncClients, ConfigurableApplicationContext context) {
-		
 		return args -> {
-			
-			
-			if(mcpSyncClients.size()==1)
-			{
-				McpSyncClient client = mcpSyncClients.get(0);
-				
+			if (mcpSyncClients.size() == 1) {
+				McpSyncClient client = mcpSyncClients.getFirst();
 				ListToolsResult toolsList = client.listTools();
 				System.out.println("Available Tools = " + toolsList);
-				toolsList.tools().stream().forEach(tool -> {
+				toolsList.tools().forEach(tool -> {
 					System.out.println("Tool: " + tool.name() + ", description: " + tool.description() + ", schema: "
 							+ tool.inputSchema());
 				});
-				
+
 				ListResourcesResult listResources = client.listResources();
-				listResources.resources().forEach(resource->{
-					System.out.println("Resource: " +resource.name()+", "+resource.uri()+", "+resource.description());
+				listResources.resources().forEach(resource -> {
+					System.out.println("Resource: " + resource.name() + ", " + resource.uri() + ", " + resource.description());
 				});
 				ReadResourceResult resource = client.readResource(new ReadResourceRequest("mcp://brandz/store/rules"));
-			
 				System.out.println("result = " + resource);
-				
+
 				ListPromptsResult listPrompts = client.listPrompts();
-				listPrompts.prompts().forEach(prompt->{
-					System.out.println("Prompt: " +prompt.name()+", "+prompt.description());
+				listPrompts.prompts().forEach(prompt -> {
+					System.out.println("Prompt: " + prompt.name() + ", " + prompt.description());
 				});
 				GetPromptResult prompt = client.getPrompt(
 						new GetPromptRequest("brandz-greeting", Map.of("name", "Doe")));
 				System.out.println("result = " + prompt);
-				
+
 				// Completions
 				CompleteResult completion = client.completeCompletion(new CompleteRequest(new PromptReference("country-status"),
 						new CompleteRequest.CompleteArgument("countryName", "a")));
-			
 				System.out.println("Completion = " + completion);
-				
+
 				context.close();
-			
 			}
-			
 
 		};
 	}
 
-	
 }
 ```
 
@@ -1500,7 +1390,6 @@ public class MyMcpClientApplication {
 spring.application.name=mcp
 spring.main.web-application-type=none
 spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.json
-
 
 ```
 
@@ -1512,15 +1401,6 @@ In this   code am showing how a MCP client can use resources, prompts and comple
 
 I am not using a LLM here. We have already demonstrated LLM and MCP adequately.
 
-
-I have tried to use a freely available LLM and demonstrate the custom MCP client interaction.
-This LLM may not be as smart as GitHub Copilot. However, it is reasonably smart and available for free, with certain limitations.
-You can also checkout - https://console.groq.com/settings/billing
-
-Note that you might encounter a model_terms_required error, indicating that your organization's administrator needs to accept the terms of service at https://console.groq.com/playground?model=mistral-saba-24b. If you are doing the free trial the adminisitrator would be you only.
-
-Use this url to accept the terms.  
-https://console.groq.com/settings/model-terms
 
 
 
@@ -1608,7 +1488,12 @@ I also hope you can see how this type of a application need not be just a consol
 
 Complete code is available here -- https://github.com/teq-niq/mcp-stdio-logging.git
 
+### Sample Tools, Resources, Prompts, Completions used here  
 
+[Sample MCP Artifacts](./samplemcpartifacts.MD "sample mcp artifacts") 
+
+
+  
 
 ### References:
 

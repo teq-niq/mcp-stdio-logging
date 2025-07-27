@@ -2,6 +2,11 @@ package com.eg.mcp.providers.tools;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Service;
+
 import com.eg.mcp.models.Cart;
 import com.eg.mcp.models.Order;
 import com.eg.mcp.models.SportsItem;
@@ -10,12 +15,6 @@ import com.eg.mcp.utils.MarkdownMapper;
 import com.eg.mcp.utils.McpLoggingProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 /*
  * Initially was planning of making this a class for Resources and not Tools.
@@ -28,9 +27,6 @@ public class StoreResourceNowToolsProvider {
 	private static final Logger logger = LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
 
 	private static final String RETURNS = "Returns the URL of the image of the ";
-
-	@Value("${mine.mcpurl:false}")
-	private boolean mineMcpurl = false;
 
 	private final ObjectMapper jsonMapper;
 
@@ -114,8 +110,7 @@ public class StoreResourceNowToolsProvider {
 	}
 
 	private String mduri(SportsItem sportsItem) {
-		return mineMcpurl ? "mcp://resource/" + sportsItem.touri()
-				: mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
+		return  mcpLoggingProperties.imagesServerUrl() + sportsItem.touri();
 	}
 
 }

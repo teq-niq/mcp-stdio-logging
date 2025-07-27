@@ -3,15 +3,16 @@ package com.eg.mcp.providers.others;
 import java.util.List;
 import java.util.random.RandomGenerator;
 
+import org.springframework.stereotype.Service;
+
 import com.eg.mcp.utils.CountryPromptDatabase;
 import com.logaritex.mcp.annotation.McpArg;
 import com.logaritex.mcp.annotation.McpPrompt;
+
 import io.modelcontextprotocol.spec.McpSchema.GetPromptResult;
 import io.modelcontextprotocol.spec.McpSchema.PromptMessage;
 import io.modelcontextprotocol.spec.McpSchema.Role;
 import io.modelcontextprotocol.spec.McpSchema.TextContent;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class StoreMcpPromptProvider {
