@@ -160,7 +160,7 @@ The whole code will be shared towards the end.
 	<description>mymcpserver</description>
 
 	<properties>
-		<java.version>22</java.version>
+		<java.version>24</java.version>
 		<spring-ai.version>1.0.0</spring-ai.version>
 	</properties>
 
@@ -288,7 +288,7 @@ import jakarta.annotation.PreDestroy;
 
 @SpringBootApplication
 public class MyMcpServerApplication {
-	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	
 	private FileOutputStream fos;
 	private FileOutputStream fis;
@@ -436,7 +436,7 @@ public class StoreToolsProvider {
 	
 	
 	
-	private static Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreToolsProvider.class);
 	private State state;
 	public StoreToolsProvider(State state) {
 		super();
@@ -919,7 +919,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 @Service
 public class StoreResourceNowToolsProvider {
-	private static Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
+	private static final Logger logger=LoggerFactory.getLogger(StoreResourceNowToolsProvider.class);
 	@Value("${server.port:8080}")
 	private int serverPort = 8080;
 
@@ -1325,7 +1325,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 	<description>Simple AI Application using MCP client sample</description>
 	
 	<properties>
-		<java.version>22</java.version>
+		<java.version>24</java.version>
 	</properties>
 
 	<dependencyManagement>

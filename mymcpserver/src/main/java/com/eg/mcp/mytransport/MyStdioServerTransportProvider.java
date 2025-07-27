@@ -34,6 +34,8 @@ import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Implementation of the MCP Stdio transport provider for servers that communicates using
  * standard input/output streams. Messages are exchanged as newline-delimited JSON-RPC
@@ -41,6 +43,7 @@ import reactor.core.scheduler.Schedulers;
  *
  * @author Christian Tzolov
  */
+@Component
 public class MyStdioServerTransportProvider implements McpServerTransportProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyStdioServerTransportProvider.class);
@@ -128,10 +131,10 @@ public class MyStdioServerTransportProvider implements McpServerTransportProvide
 		private final AtomicBoolean isStarted = new AtomicBoolean(false);
 
 		/** Scheduler for handling inbound messages */
-		private Scheduler inboundScheduler;
+		private final Scheduler inboundScheduler;
 
 		/** Scheduler for handling outbound messages */
-		private Scheduler outboundScheduler;
+		private final Scheduler outboundScheduler;
 
 		private final Sinks.One<Void> outboundReady = Sinks.one();
 
@@ -202,7 +205,7 @@ public class MyStdioServerTransportProvider implements McpServerTransportProvide
 			if (isStarted.compareAndSet(false, true)) {
 				this.inboundScheduler.schedule(() -> {
 					inboundReady.tryEmitValue(null);
-					BufferedReader reader = null;
+					BufferedReader reader;
 					try {
 						reader = new BufferedReader(new InputStreamReader(inputStream));
 						while (!isClosing.get()) {
