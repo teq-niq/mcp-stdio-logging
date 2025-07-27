@@ -1,18 +1,13 @@
 package com.eg.mcp.providers.others;
 
-import java.io.IOException;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 
-import com.eg.mcp.models.State;
-import com.eg.mcp.utils.MarkdownMapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.logaritex.mcp.annotation.McpResource;
+
 import io.modelcontextprotocol.spec.McpSchema.ReadResourceRequest;
 import io.modelcontextprotocol.spec.McpSchema.ResourceContents;
 import io.modelcontextprotocol.spec.McpSchema.TextResourceContents;
-
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 
 @Service
 public class StoreMcpResourceProvider {

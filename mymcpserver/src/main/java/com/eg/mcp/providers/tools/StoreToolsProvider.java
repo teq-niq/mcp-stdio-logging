@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eg.mcp.models.SportsItem;
-import com.eg.mcp.models.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
+
+import com.eg.mcp.models.SportsItem;
+import com.eg.mcp.models.State;
 
 @Service
 public class StoreToolsProvider {

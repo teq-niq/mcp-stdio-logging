@@ -8,26 +8,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eg.mcp.providers.others.StoreMcpCompleteProvider;
-import com.eg.mcp.providers.others.StoreMcpPromptProvider;
-import com.eg.mcp.providers.others.StoreMcpResourceProvider;
-import com.eg.mcp.providers.tools.StoreResourceNowToolsProvider;
-import com.eg.mcp.providers.tools.StoreToolsProvider;
-import com.eg.mcp.utils.McpLoggingProperties;
-import com.logaritex.mcp.spring.SpringAiMcpAnnotationProvider;
-import io.modelcontextprotocol.server.McpServerFeatures;
-import io.modelcontextprotocol.server.McpServerFeatures.SyncCompletionSpecification;
-import io.modelcontextprotocol.server.McpServerFeatures.SyncPromptSpecification;
-import io.modelcontextprotocol.server.McpServerFeatures.SyncResourceSpecification;
-import io.modelcontextprotocol.spec.McpSchema;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.TeeInputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
@@ -35,6 +20,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+
+import com.eg.mcp.providers.others.StoreMcpCompleteProvider;
+import com.eg.mcp.providers.others.StoreMcpPromptProvider;
+import com.eg.mcp.providers.others.StoreMcpResourceProvider;
+import com.eg.mcp.providers.tools.StoreResourceNowToolsProvider;
+import com.eg.mcp.providers.tools.StoreToolsProvider;
+import com.eg.mcp.utils.McpLoggingProperties;
+import com.logaritex.mcp.spring.SpringAiMcpAnnotationProvider;
+
+import io.modelcontextprotocol.server.McpServerFeatures;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncCompletionSpecification;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncPromptSpecification;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncResourceSpecification;
+import io.modelcontextprotocol.spec.McpSchema;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 @SpringBootApplication
 @EnableConfigurationProperties(McpLoggingProperties.class)
