@@ -61,6 +61,31 @@ Found here:
 |---------------|--------------|----------------------|
 | mcp://brandz/store/faqs  | store_faqs | content of store faqs in plain text |
 
-## Prompts
+## Prompts  
 
-## Completions
+Found here:
+mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpPromptProvider.java   
+
+@McpPrompt was used for this.
+
+|Prompt name | Description                            |
+|---------------|----------------------------------------|
+| brandz-greeting          | Greets the user visiting Brand Z Sports Store   |
+| country-status      | Gives information on how many stores are there in the input country name    |
+
+
+
+## Completions  
+
+Found here:
+mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpCompleteProvider.java
+
+@McpComplete was used for this.
+
+Have provided only a Prompt Completion. Have not provided a Resource Completion. Approach can be generally the same for both. The Prompt completion is for the prompt "country-status"     
+
+## Notes
+All these above artifacts are registered or specified in mymcpserver/src/main/java/com/eg/mcp/MyMcpServerApplication.java.
+Class mymcpclient/src/main/java/com/eg/mcp/MyMcpClientApplication.java uses the resources, prompts and completions.  
+
+
