@@ -10,7 +10,7 @@
 
 ## Tools
 Found here:  
-mymcpserver\src\main\java\com\eg\mcp\providers\tools\StoreToolsProvider.java   
+mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreToolsProvider.java   
 
 | Tool name     | Description                            |
 |---------------|----------------------------------------|
@@ -23,7 +23,25 @@ mymcpserver\src\main\java\com\eg\mcp\providers\tools\StoreToolsProvider.java
 | change_quantity_of_cart_item        | Change the quantity of the specified cart item to specified quantity          |
 | remove_item_from_cart_completely    | Remove item  from cart item by specifying item name. Can think that its quantity was reduced to 0. Item will no longer occur in the cart.      |
 | checkout_and_pay        | Check out items in the cart. Payment is automatic. After checkout order is available as last order.          |
-## Tools that were initially planned as Resources
+
+
+## Tools that were initially planned as Resources   
+
+Found here:  
+mymcpserver/src/main/java/com/eg/mcp/providers/tools/StoreResourceNowToolsProvider.java
+
+| Tool name     | Description                            |
+|---------------|----------------------------------------|
+| get_tennis_ball_image          | Returns the URL of the image of the tennis ball   |
+| get_tennis_net_image      | Returns the URL of the image of the tennis net    |
+| get_tennis_raquet_image          | Returns the URL of the image of the tennis raquet   |
+| get_football_image      | Returns the URL of the image of the football    |
+| get_cart_content_in_json        | get cart content formatted in json          |
+| get_cart_content_in_xml        | get cart content formatted in xml          |
+| get_cart_content_in_markdown        | get cart content formatted in markdown          |
+| get_last_order_content_in_json        | get last order content formatted in json          |
+| get_last_order_content_in_xml        | get last order content formatted in xml          |
+| get_last_order_content_in_markdown        | get last order content formatted in markdown          |
 
 
 ## Resources
