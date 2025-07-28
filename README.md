@@ -508,7 +508,7 @@ That is our main Tools Provider class. Do have a look also these lines in our ma
 
 StoreResourceNowToolsProvider is also a Tools provider. Will come to it after a while.
 
-#### MyStdioServerTransport
+#### MyStdioServerTransportProvider
 
 Note on Implementation: In earlier versions (e.g., spring-ai-bom/1.0.0-M6), it was possible to achieve this logging via delegation. However, due to changes in the current SDK implementation, directly modifying the StdioServerTransportProvider or copying its relevant parts was necessary to inject the custom logging.
 
