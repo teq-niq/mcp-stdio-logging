@@ -774,7 +774,7 @@ But I can’t resist sharing a few conversations that illustrate how **MCP-power
 
 #### How Workspace Context Changes Agent Behavior
 
-Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class StoreToolsProvider.java open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
+Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class **StoreToolsProvider.java** open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
 |----------|----------|
