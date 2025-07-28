@@ -659,7 +659,7 @@ Here search for "Github Copilot" and press the "Go" Button.
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
 Press the install button and carry out the remaining steps.   
 0.8.0 was the version available at the time of writing this.  
-0.9.2 is available now and behaves mostly the same for the purpose of this article.   
+0.9.3 is available now and behaves mostly the same for the purpose of this article.   
 
 #### Github Copilot eclipse plugin configuration
 
@@ -696,7 +696,7 @@ Let's change the configuration to
 }
 ```
 <img src="images/copilot-config2.png" alt="Edit MCP Server Configurations" width="600"/>  
-The image might show jdk 22 but It have upgrdaed my jdk to jdk 24 as shown in the json.   
+   
 
 
 Press "Apply and close" button.
@@ -706,12 +706,11 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
 As I went about coding the number of tools actually increased than what you can see listed here.  
-Also The image might show jdk 22 but It have upgrdaed my jdk to jdk 24.
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.2 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.3 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
 
 
 ### Checking the logs
@@ -775,11 +774,11 @@ But I can’t resist sharing a few conversations that illustrate how **MCP-power
 
 #### How Workspace Context Changes Agent Behavior
 
-Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class StoreService.java open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
+Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class **StoreToolsProvider.java** open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
 |----------|----------|
-| <img src="images/ws_without_code.png" alt="Empty Wokspace" width="400"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" width="400"/>      |
+| <img src="images/ws_without_code.png" alt="Empty Wokspace" height="300"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" height="300"/>      |
 
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
