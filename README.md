@@ -778,7 +778,7 @@ Showing below the conversation in two flavours of my CoPilot. In one I have a to
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
 |----------|----------|
-| <img src="images/ws_without_code.png" alt="Empty Wokspace" width="400"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" width="400"/>      |
+| <img src="images/ws_without_code.png" alt="Empty Wokspace" height="300"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" height="300"/>      |
 
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
