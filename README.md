@@ -111,7 +111,7 @@ Now, for everyone else who’s not quite in a hurry—let’s walk through the s
 ### Co Pilot Conversation Illustration    
 
 
-<img src="svg/output.svg" alt="copilot chat" /> 
+<img src="images/output.svg" alt="copilot chat" /> 
 
 
 Note: would have been glad to render the MCP logs also same way. But they are too verbose when formatted. Rendering without formatting wont add visual immediate value.
@@ -1392,15 +1392,11 @@ spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.j
 
 ```
 
-It's important to remember that for an LLM to recognize and utilize resources, prompts, or completions as MCP Tools, they typically need to be explicitly configured as such. Refer to the relevant section for detailed nuances we discussed earlier.
+It’s important to remember that for an LLM to recognize and utilize resources, prompts, or completions, they typically need to be explicitly configured as such. See the earlier discussion or refer directly to the official documentation on resources for more detail.    
 
-That said resources, prompts, completions are primarily for MCP client or user usage.  
+That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.   
 
-In this   code am showing how a MCP client can use resources, prompts and completions.  
-
-I am not using a LLM here. We have already demonstrated LLM and MCP adequately.
-
-
+In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these resources, prompts, and completions could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
 
 
 
@@ -1451,7 +1447,7 @@ Completion = CompleteResult[completion=CompleteCompletion[values=[Afghanistan, A
 
 ```
 
-
+Showing above the output of the MCP Client.   
 
 
 ### MCP Inspector
