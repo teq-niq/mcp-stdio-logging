@@ -111,7 +111,7 @@ Now, for everyone else who’s not quite in a hurry—let’s walk through the s
 ### Co Pilot Conversation Illustration    
 
 
-<img src="images/output.svg" alt="copilot chat" /> 
+<img src="svg/output.svg" alt="copilot chat" /> 
 
 
 Note: would have been glad to render the MCP logs also same way. But they are too verbose when formatted. Rendering without formatting wont add visual immediate value.
