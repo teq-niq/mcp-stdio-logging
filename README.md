@@ -46,7 +46,7 @@ Once we have the basic setup running, we’ll take it further and:
 - Connect it to the same MCP server  
 - Use the same logging trick to inspect `stdio`-based messages in both directions
 - We will demonstrate using this MCP client what we were unable to demonstrate using Copilot. Namely using resources, Prompts and Completions.  This is because standard Copilot integrations often focus primarily on tool invocation, making direct observation of other protocol features challenging. We will also discuss why this is so.  
-- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Copilot. Also getting a free LLM which is that smart is not so easy.
+- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Copilot. 
 
 We’ll also explore how the **MCP Inspector** can be used alongside our custom server. When the transport is `stdio`, the Inspector essentially behaves like another MCP client — one that doesn’t include an LLM. Think of it as an “MCP browser” or a Postman-like tool for MCP: it let's you inspect messages, invoke tools, and debug interactions directly. (Let's ignore agentic Postman, which is a different topic.)
 
@@ -1396,7 +1396,40 @@ It’s important to remember that for an LLM to recognize and utilize resources,
 
 That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.   
 
-In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these resources, prompts, and completions could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
+There is a additional nuance worth bringing out.   
+
+The existing examples of resources, prompts, and completions are based on the standard samples provided in the [Spring AI MCP Annotations Server](https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server). In particular, the [`PromptProvider.java`](https://github.com/spring-projects/spring-ai-examples/blob/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server/PromptProvider.java) class mostly returns hardcoded results for given inputs. This approach doesn't allow for any dynamic generation involving an Agent or LLM.
+
+However if the Prompt examples included an example like below
+
+```java
+@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
+	public PromptMessage generateGreetingPrompt(
+			@McpArg(name = "name", description = "The name of the person to greet") String name,
+	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
+	    String prompt;
+	    switch (style != null ? style : "friendly") {
+	        case "formal":
+	            prompt = "Please write a formal, professional greeting";
+	            break;
+	        case "casual":
+	            prompt = "Please write a casual, relaxed greeting";
+	            break;
+	        case "friendly":
+	        default:
+	            prompt = "Please write a warm, friendly greeting";
+	            break;
+	    }
+
+	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
+	}
+
+```
+
+
+This example, inspired by the [Python SDK prompt sample](https://github.com/modelcontextprotocol/python-sdk) and implemented in `mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpPromptProvider.java`, doesn't return a direct result. Instead, it returns an actual `PromptMessage` that can be possibly sent to the chat text box.   
+
+In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these prompts, and related completions if any could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
 
 
 
@@ -1443,6 +1476,7 @@ Prompt: brandz-greeting, Greets the user visiting Brand Z Sports Store
 Prompt: country-status, Gives information on how many stores are there in the input country name
 result = GetPromptResult[description=Brand Z Greeting, messages=[PromptMessage[role=ASSISTANT, content=TextContent[annotations=null, text=Hi Doe! 👋 Welcome to Brand Z Sports Store.]]]]
 Completion = CompleteResult[completion=CompleteCompletion[values=[Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria, Azerbaijan], total=11, hasMore=false]]
+geneteratedPrompt = GetPromptResult[description=null, messages=[PromptMessage[role=USER, content=TextContent[audience=null, priority=null, text=Please write a warm, friendly greeting for someone named Doe.]]]]
 [2m2025-07-16T23:00:42.454+05:30[0;39m [33m WARN[0;39m [35m26828[0;39m [2m--- [mcp] [onPool-worker-1] [0;39m[36mi.m.c.transport.StdioClientTransport    [0;39m [2m:[0;39m Process terminated with code 1
 
 ```
