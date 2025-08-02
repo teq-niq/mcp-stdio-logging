@@ -1476,7 +1476,7 @@ Prompt: brandz-greeting, Greets the user visiting Brand Z Sports Store
 Prompt: country-status, Gives information on how many stores are there in the input country name
 result = GetPromptResult[description=Brand Z Greeting, messages=[PromptMessage[role=ASSISTANT, content=TextContent[annotations=null, text=Hi Doe! 👋 Welcome to Brand Z Sports Store.]]]]
 Completion = CompleteResult[completion=CompleteCompletion[values=[Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria, Azerbaijan], total=11, hasMore=false]]
-geneteratedPrompt = GetPromptResult[description=null, messages=[PromptMessage[role=USER, content=TextContent[audience=null, priority=null, text=Please write a warm, friendly greeting for someone named Doe.]]]]
+generatedPrompt = GetPromptResult[description=null, messages=[PromptMessage[role=USER, content=TextContent[audience=null, priority=null, text=Please write a warm, friendly greeting for someone named Doe.]]]]
 [2m2025-07-16T23:00:42.454+05:30[0;39m [33m WARN[0;39m [35m26828[0;39m [2m--- [mcp] [onPool-worker-1] [0;39m[36mi.m.c.transport.StdioClientTransport    [0;39m [2m:[0;39m Process terminated with code 1
 
 ```

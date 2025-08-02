@@ -62,7 +62,7 @@ public class MyMcpClientApplication {
 				System.out.println("Completion = " + completion);
 				
 				GetPromptResult geneteratedPrompt = client.getPrompt(new GetPromptRequest("generate_greeting_prompt", Map.of("name", "Doe", "style","friendly")));
-				System.out.println("geneteratedPrompt = " + geneteratedPrompt);
+				System.out.println("generatedPrompt = " + geneteratedPrompt);
 				context.close();
 			}
 
