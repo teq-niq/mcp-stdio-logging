@@ -1394,9 +1394,41 @@ spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.j
 
 It’s important to remember that for an LLM to recognize and utilize resources, prompts, or completions, they typically need to be explicitly configured as such. See the earlier discussion or refer directly to the official documentation on resources for more detail.    
 
-That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.   
+That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.
 
-In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these resources, prompts, and completions could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
+That said there is a additional nuance worth bringing out.
+
+The examples of resources, Prompts and Completions are based on the standard examples provided here- https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server.
+Specifically when it comes to the Prompt examples https://github.com/spring-projects/spring-ai-examples/blob/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server/PromptProvider.java we will see they are only providing fixed results to questions. This leaves no room for involving any Agent or LLM.
+
+However if the Prompt examples included an example like below
+
+```java
+@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
+	public PromptMessage generateGreetingPrompt(String name, String style) {
+	    String prompt;
+	    switch (style != null ? style : "friendly") {
+	        case "formal":
+	            prompt = "Please write a formal, professional greeting";
+	            break;
+	        case "casual":
+	            prompt = "Please write a casual, relaxed greeting";
+	            break;
+	        case "friendly":
+	        default:
+	            prompt = "Please write a warm, friendly greeting";
+	            break;
+	    }
+
+	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
+	}
+
+```
+
+This example was taken from our mymcpserver\src\main\java\com\eg\mcp\providers\others\StoreMcpPromptProvider.java.  
+
+This example does not return a result but returns a actual prompt messge.  The returned prompt message could indeed be fetched and sent to the chat text box.
+In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these prompts, and related completions if any could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
 
 
 
