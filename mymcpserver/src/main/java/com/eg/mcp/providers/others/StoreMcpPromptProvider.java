@@ -60,8 +60,14 @@ public class StoreMcpPromptProvider {
 				List.of(new PromptMessage(Role.ASSISTANT, new TextContent(message))));
 	}
 	
+	/*
+	 * inspired from the prompt example mentioned here- https://github.com/modelcontextprotocol/python-sdk
+	 */
+	
 	@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
-	public PromptMessage generateGreetingPrompt(String name, String style) {
+	public PromptMessage generateGreetingPrompt(
+			@McpArg(name = "name", description = "The name of the person to greet") String name,
+	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
 	    String prompt;
 	    switch (style != null ? style : "friendly") {
 	        case "formal":

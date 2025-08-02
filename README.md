@@ -1394,18 +1394,19 @@ spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.j
 
 It’s important to remember that for an LLM to recognize and utilize resources, prompts, or completions, they typically need to be explicitly configured as such. See the earlier discussion or refer directly to the official documentation on resources for more detail.    
 
-That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.
+That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.   
 
-That said there is a additional nuance worth bringing out.
+There is a additional nuance worth bringing out.   
 
-The examples of resources, Prompts and Completions are based on the standard examples provided here- https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server.
-Specifically when it comes to the Prompt examples https://github.com/spring-projects/spring-ai-examples/blob/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server/PromptProvider.java we will see they are only providing fixed results to questions. This leaves no room for involving any Agent or LLM.
+The existing examples of resources, prompts, and completions are based on the standard samples provided in the [Spring AI MCP Annotations Server](https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server). In particular, the [`PromptProvider.java`](https://github.com/spring-projects/spring-ai-examples/blob/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server/PromptProvider.java) class mostly returns hardcoded results for given inputs. This approach doesn't allow for any dynamic generation involving an Agent or LLM.
 
 However if the Prompt examples included an example like below
 
 ```java
 @McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
-	public PromptMessage generateGreetingPrompt(String name, String style) {
+	public PromptMessage generateGreetingPrompt(
+			@McpArg(name = "name", description = "The name of the person to greet") String name,
+	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
 	    String prompt;
 	    switch (style != null ? style : "friendly") {
 	        case "formal":
@@ -1425,9 +1426,9 @@ However if the Prompt examples included an example like below
 
 ```
 
-This example was taken from our mymcpserver\src\main\java\com\eg\mcp\providers\others\StoreMcpPromptProvider.java.  
 
-This example does not return a result but returns a actual prompt messge.  The returned prompt message could indeed be fetched and sent to the chat text box.
+This example, inspired by the [Python SDK prompt sample](https://github.com/modelcontextprotocol/python-sdk) and implemented in `mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpPromptProvider.java`, doesn't return a direct result. Instead, it returns an actual `PromptMessage` that can be possibly sent to the chat text box.   
+
 In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these prompts, and related completions if any could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
 
 
@@ -1475,6 +1476,7 @@ Prompt: brandz-greeting, Greets the user visiting Brand Z Sports Store
 Prompt: country-status, Gives information on how many stores are there in the input country name
 result = GetPromptResult[description=Brand Z Greeting, messages=[PromptMessage[role=ASSISTANT, content=TextContent[annotations=null, text=Hi Doe! 👋 Welcome to Brand Z Sports Store.]]]]
 Completion = CompleteResult[completion=CompleteCompletion[values=[Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria, Azerbaijan], total=11, hasMore=false]]
+geneteratedPrompt = GetPromptResult[description=null, messages=[PromptMessage[role=USER, content=TextContent[audience=null, priority=null, text=Please write a warm, friendly greeting for someone named Doe.]]]]
 [2m2025-07-16T23:00:42.454+05:30[0;39m [33m WARN[0;39m [35m26828[0;39m [2m--- [mcp] [onPool-worker-1] [0;39m[36mi.m.c.transport.StdioClientTransport    [0;39m [2m:[0;39m Process terminated with code 1
 
 ```
