@@ -10,18 +10,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.modelcontextprotocol.spec.McpError;
 import io.modelcontextprotocol.spec.McpSchema;
 import io.modelcontextprotocol.spec.McpSchema.JSONRPCMessage;
@@ -29,6 +26,10 @@ import io.modelcontextprotocol.spec.McpServerSession;
 import io.modelcontextprotocol.spec.McpServerTransport;
 import io.modelcontextprotocol.spec.McpServerTransportProvider;
 import io.modelcontextprotocol.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
@@ -130,10 +131,10 @@ public class MyStdioServerTransportProvider implements McpServerTransportProvide
 		private final AtomicBoolean isStarted = new AtomicBoolean(false);
 
 		/** Scheduler for handling inbound messages */
-		private final Scheduler inboundScheduler;
+		private Scheduler inboundScheduler;
 
 		/** Scheduler for handling outbound messages */
-		private final Scheduler outboundScheduler;
+		private Scheduler outboundScheduler;
 
 		private final Sinks.One<Void> outboundReady = Sinks.one();
 
@@ -204,7 +205,7 @@ public class MyStdioServerTransportProvider implements McpServerTransportProvide
 			if (isStarted.compareAndSet(false, true)) {
 				this.inboundScheduler.schedule(() -> {
 					inboundReady.tryEmitValue(null);
-					BufferedReader reader;
+					BufferedReader reader = null;
 					try {
 						reader = new BufferedReader(new InputStreamReader(inputStream));
 						while (!isClosing.get()) {
