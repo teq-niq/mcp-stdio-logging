@@ -161,7 +161,7 @@ The whole code will be shared towards the end.
 
 	<properties>
 		<java.version>24</java.version>
-		<spring-ai.version>1.0.0</spring-ai.version>
+		<spring-ai.version>1.0.1</spring-ai.version>
 	</properties>
 
 	<dependencies>
@@ -835,7 +835,8 @@ We can note that the server has informed the client about its capabilies here:
 Sending JSON message: {"jsonrpc":"2.0","id":0,"result":{"protocolVersion":"2024-11-05","capabilities":{"completions":{},"logging":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"brand-z-sports-store","version":"0.0.1"}}}
 ```
 
-Subsequently the server is inquiring about the tools. 
+Subsequently, the server is asked about the tools.   
+
 ```text
 Received JSON message: {"method":"tools/list","jsonrpc":"2.0","id":1}
 ```
@@ -967,10 +968,22 @@ public class StoreResourceNowToolsProvider {
 }
 
 ```
+In this connection see: <https://modelcontextprotocol.io/docs/learn/server-concepts#resources-context-data>    
 
-In this connection see: https://modelcontextprotocol.io/docs/concepts/resources
+I do reproduce the relevant section here for quick reading.   
 
-I do reproduce the relevant section here for quick reading.
+```Markdown
+Resources expose data from files, APIs, databases, or any other source that an AI needs to understand context. Applications can access this information directly and decide how to use it - whether that’s selecting relevant portions, searching with embeddings, or passing it all to the model.
+```
+
+```Markdown
+Resources are application-driven, giving hosts flexibility in how they retrieve, process, and present available context. Common interaction patterns include tree or list views for browsing resources in familiar folder-like structures, search and filter interfaces for finding specific resources, automatic context inclusion based on heuristics or AI selection, and manual selection interfaces.
+```
+
+Sometimes helps to see slightly older explanations:  https://modelcontextprotocol.io/legacy/concepts/resources.   
+
+The relevant section here for quick reading.  
+
 
 ```
 
@@ -1257,7 +1270,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 
 	<properties>
 		<java.version>24</java.version>
-		<spring-ai.version>1.0.0</spring-ai.version>
+		<spring-ai.version>1.0.1</spring-ai.version>
 	</properties>
 
 	<dependencyManagement>
