@@ -46,7 +46,7 @@ Once we have the basic setup running, we’ll take it further and:
 - Connect it to the same MCP server  
 - Use the same logging trick to inspect `stdio`-based messages in both directions
 - We will demonstrate using this MCP client what we were unable to demonstrate using Copilot. Namely using resources, Prompts and Completions.  This is because standard Copilot integrations often focus primarily on tool invocation, making direct observation of other protocol features challenging. We will also discuss why this is so.  
-- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Copilot. Also getting a free LLM which is that smart is not so easy.
+- We will not be demonstrating LLMs invoking tools in this custom MCP client. That has been already discussed with Copilot. 
 
 We’ll also explore how the **MCP Inspector** can be used alongside our custom server. When the transport is `stdio`, the Inspector essentially behaves like another MCP client — one that doesn’t include an LLM. Think of it as an “MCP browser” or a Postman-like tool for MCP: it let's you inspect messages, invoke tools, and debug interactions directly. (Let's ignore agentic Postman, which is a different topic.)
 
@@ -111,7 +111,7 @@ Now, for everyone else who’s not quite in a hurry—let’s walk through the s
 ### Co Pilot Conversation Illustration    
 
 
-<img src="svg/output.svg" alt="copilot chat" /> 
+<img src="images/output.gif" alt="copilot chat" /> 
 
 
 Note: would have been glad to render the MCP logs also same way. But they are too verbose when formatted. Rendering without formatting wont add visual immediate value.
@@ -161,7 +161,7 @@ The whole code will be shared towards the end.
 
 	<properties>
 		<java.version>24</java.version>
-		<spring-ai.version>1.0.0</spring-ai.version>
+		<spring-ai.version>1.0.1</spring-ai.version>
 	</properties>
 
 	<dependencies>
@@ -508,7 +508,7 @@ That is our main Tools Provider class. Do have a look also these lines in our ma
 
 StoreResourceNowToolsProvider is also a Tools provider. Will come to it after a while.
 
-#### MyStdioServerTransport
+#### MyStdioServerTransportProvider
 
 Note on Implementation: In earlier versions (e.g., spring-ai-bom/1.0.0-M6), it was possible to achieve this logging via delegation. However, due to changes in the current SDK implementation, directly modifying the StdioServerTransportProvider or copying its relevant parts was necessary to inject the custom logging.
 
@@ -659,7 +659,7 @@ Here search for "Github Copilot" and press the "Go" Button.
 <img src="images/market-place2.png" alt="Install Copilot" width="600"/>  
 Press the install button and carry out the remaining steps.   
 0.8.0 was the version available at the time of writing this.  
-0.9.2 is available now and behaves mostly the same for the purpose of this article.   
+0.9.3 is available now and behaves mostly the same for the purpose of this article.   
 
 #### Github Copilot eclipse plugin configuration
 
@@ -696,7 +696,7 @@ Let's change the configuration to
 }
 ```
 <img src="images/copilot-config2.png" alt="Edit MCP Server Configurations" width="600"/>  
-The image might show jdk 22 but It have upgrdaed my jdk to jdk 24 as shown in the json.   
+   
 
 
 Press "Apply and close" button.
@@ -706,12 +706,11 @@ Revisit Copilot> Edit Preferences > GitHub CoPilot> MCP
 <img src="images/copilot-config3.png" alt="Review MCP Server Configurations" width="600"/>   
 
 As I went about coding the number of tools actually increased than what you can see listed here.  
-Also The image might show jdk 22 but It have upgrdaed my jdk to jdk 24.
 
 Visit Copilot > Open Chat  
 <img src="images/set-agent-mode.png" alt="Set Agent Mode" width="600"/>  
 **Ensure Agent Mode is Enabled**
-This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.2 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
+This is the much-discussed Agent Mode, where GitHub Copilot can go beyond suggestions — it can actively write, modify and refactor your code among other capabilities.  In version 0.9.3 Agent mode is no longer in just Preview mode. Do please enable Agent Mode.   
 
 
 ### Checking the logs
@@ -775,11 +774,11 @@ But I can’t resist sharing a few conversations that illustrate how **MCP-power
 
 #### How Workspace Context Changes Agent Behavior
 
-Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class StoreService.java open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
+Showing below the conversation in two flavours of my CoPilot. In one I have a totally empty eclipse workspace. In another I have the server code in the workspace. I am in general trying to ask the same questions. I also have the java class **StoreToolsProvider.java** open in eclipse editor. Its also automatically added to the Copilot context.  In both the MCP configuration is done in the same way. I have been running them seperately not together. The actual text might vary a little on each run but you will be able to spot the main differences.  
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
 |----------|----------|
-| <img src="images/ws_without_code.png" alt="Empty Wokspace" width="400"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" width="400"/>      |
+| <img src="images/ws_without_code.png" alt="Empty Wokspace" height="300"/>     | <img src="images/ws_with_code.png" alt="Worspace with MCP server code" height="300"/>      |
 
 
 | empty workspace - workspace without MCP server code | workspace with MCP server code |
@@ -836,7 +835,8 @@ We can note that the server has informed the client about its capabilies here:
 Sending JSON message: {"jsonrpc":"2.0","id":0,"result":{"protocolVersion":"2024-11-05","capabilities":{"completions":{},"logging":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"brand-z-sports-store","version":"0.0.1"}}}
 ```
 
-Subsequently the server is inquiring about the tools. 
+Subsequently, the server is asked about the tools.   
+
 ```text
 Received JSON message: {"method":"tools/list","jsonrpc":"2.0","id":1}
 ```
@@ -968,10 +968,22 @@ public class StoreResourceNowToolsProvider {
 }
 
 ```
+In this connection see: <https://modelcontextprotocol.io/docs/learn/server-concepts#resources-context-data>    
 
-In this connection see: https://modelcontextprotocol.io/docs/concepts/resources
+I do reproduce the relevant section here for quick reading.   
 
-I do reproduce the relevant section here for quick reading.
+```Markdown
+Resources expose data from files, APIs, databases, or any other source that an AI needs to understand context. Applications can access this information directly and decide how to use it - whether that’s selecting relevant portions, searching with embeddings, or passing it all to the model.
+```
+
+```Markdown
+Resources are application-driven, giving hosts flexibility in how they retrieve, process, and present available context. Common interaction patterns include tree or list views for browsing resources in familiar folder-like structures, search and filter interfaces for finding specific resources, automatic context inclusion based on heuristics or AI selection, and manual selection interfaces.
+```
+
+Sometimes helps to see slightly older explanations:  https://modelcontextprotocol.io/legacy/concepts/resources.   
+
+The relevant section here for quick reading.  
+
 
 ```
 
@@ -1258,7 +1270,7 @@ Note: Usually, LLMs enhance a tool's raw output by adding conversational element
 
 	<properties>
 		<java.version>24</java.version>
-		<spring-ai.version>1.0.0</spring-ai.version>
+		<spring-ai.version>1.0.1</spring-ai.version>
 	</properties>
 
 	<dependencyManagement>
@@ -1393,15 +1405,44 @@ spring.ai.mcp.client.stdio.servers-configuration=classpath:/mcp-servers-config.j
 
 ```
 
-It's important to remember that for an LLM to recognize and utilize resources, prompts, or completions as MCP Tools, they typically need to be explicitly configured as such. Refer to the relevant section for detailed nuances we discussed earlier.
+It’s important to remember that for an LLM to recognize and utilize resources, prompts, or completions, they typically need to be explicitly configured as such. See the earlier discussion or refer directly to the official documentation on resources for more detail.    
 
-That said resources, prompts, completions are primarily for MCP client or user usage.  
+That said, resources, prompts, and completions are primarily intended for use by the MCP client or end user. In the code example shown here, we demonstrate how an MCP client can handle these features independently — without involving an LLM. LLM-integrated usage scenarios have already been covered in previous sections.   
 
-In this   code am showing how a MCP client can use resources, prompts and completions.  
+There is a additional nuance worth bringing out.   
 
-I am not using a LLM here. We have already demonstrated LLM and MCP adequately.
+The existing examples of resources, prompts, and completions are based on the standard samples provided in the [Spring AI MCP Annotations Server](https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server). In particular, the [`PromptProvider.java`](https://github.com/spring-projects/spring-ai-examples/blob/main/model-context-protocol/mcp-annotations-server/src/main/java/org/springframework/ai/mcp/sample/server/PromptProvider.java) class mostly returns hardcoded results for given inputs. This approach doesn't allow for any dynamic generation involving an Agent or LLM.
+
+However if the Prompt examples included an example like below
+
+```java
+@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
+	public PromptMessage generateGreetingPrompt(
+			@McpArg(name = "name", description = "The name of the person to greet") String name,
+	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
+	    String prompt;
+	    switch (style != null ? style : "friendly") {
+	        case "formal":
+	            prompt = "Please write a formal, professional greeting";
+	            break;
+	        case "casual":
+	            prompt = "Please write a casual, relaxed greeting";
+	            break;
+	        case "friendly":
+	        default:
+	            prompt = "Please write a warm, friendly greeting";
+	            break;
+	    }
+
+	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
+	}
+
+```
 
 
+This example, inspired by the [Python SDK prompt sample](https://github.com/modelcontextprotocol/python-sdk) and implemented in `mymcpserver/src/main/java/com/eg/mcp/providers/others/StoreMcpPromptProvider.java`, doesn't return a direct result. Instead, it returns an actual `PromptMessage` that can be possibly sent to the chat text box.   
+
+In an LLM-enabled MCP client — such as GitHub Copilot (were it to allow such integrations) — these prompts, and related completions if any could, with user approval, be surfaced to the LLM during conversations, allowing the model to utilize them meaningfully.   
 
 
 
@@ -1448,11 +1489,12 @@ Prompt: brandz-greeting, Greets the user visiting Brand Z Sports Store
 Prompt: country-status, Gives information on how many stores are there in the input country name
 result = GetPromptResult[description=Brand Z Greeting, messages=[PromptMessage[role=ASSISTANT, content=TextContent[annotations=null, text=Hi Doe! 👋 Welcome to Brand Z Sports Store.]]]]
 Completion = CompleteResult[completion=CompleteCompletion[values=[Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria, Azerbaijan], total=11, hasMore=false]]
+generatedPrompt = GetPromptResult[description=null, messages=[PromptMessage[role=USER, content=TextContent[audience=null, priority=null, text=Please write a warm, friendly greeting for someone named Doe.]]]]
 [2m2025-07-16T23:00:42.454+05:30[0;39m [33m WARN[0;39m [35m26828[0;39m [2m--- [mcp] [onPool-worker-1] [0;39m[36mi.m.c.transport.StdioClientTransport    [0;39m [2m:[0;39m Process terminated with code 1
 
 ```
 
-
+Showing above the output of the MCP Client.   
 
 
 ### MCP Inspector

@@ -36,7 +36,8 @@ public class StoreMcpPromptProvider {
 		return new GetPromptResult("Brand Z Greeting",
 				List.of(new PromptMessage(Role.ASSISTANT, new TextContent(message))));
 	}
-
+	
+	
 	@McpPrompt(name = "country-status", description = "Gives information on how many stores are there in the input country name")
 	public GetPromptResult countryStoreStatus(
 			@McpArg(name = "countryName", description = "The name of the country", required = true) String countryName) {
@@ -57,6 +58,31 @@ public class StoreMcpPromptProvider {
 
 		return new GetPromptResult("Number of stores in the country",
 				List.of(new PromptMessage(Role.ASSISTANT, new TextContent(message))));
+	}
+	
+	/*
+	 * inspired from the prompt example mentioned here- https://github.com/modelcontextprotocol/python-sdk
+	 */
+	
+	@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
+	public PromptMessage generateGreetingPrompt(
+			@McpArg(name = "name", description = "The name of the person to greet") String name,
+	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
+	    String prompt;
+	    switch (style != null ? style : "friendly") {
+	        case "formal":
+	            prompt = "Please write a formal, professional greeting";
+	            break;
+	        case "casual":
+	            prompt = "Please write a casual, relaxed greeting";
+	            break;
+	        case "friendly":
+	        default:
+	            prompt = "Please write a warm, friendly greeting";
+	            break;
+	    }
+
+	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
 	}
 
 }
