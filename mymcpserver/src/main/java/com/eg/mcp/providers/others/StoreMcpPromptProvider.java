@@ -40,7 +40,7 @@ public class StoreMcpPromptProvider {
 	
 	@McpPrompt(name = "country-status", description = "Gives information on how many stores are there in the input country name")
 	public GetPromptResult countryStoreStatus(
-			@McpArg(name = "countryName", description = "The name of the country", required = true) String countryName) {
+			@McpArg(name = "country-name",  description = "The name of the country", required = true ) String countryName) {
 		String message;
 		if (countryName == null || countryName.isBlank()) {
 			message = "Enter a country";
@@ -66,8 +66,8 @@ public class StoreMcpPromptProvider {
 	
 	@McpPrompt(name = "generate_greeting_prompt", description = "Generate a greeting prompt")
 	public PromptMessage generateGreetingPrompt(
-			@McpArg(name = "name", description = "The name of the person to greet") String name,
-	        @McpArg(name = "style", description = "The style of the greeting: formal, casual, or friendly") String style) {
+			@McpArg(name = "name", description = "The name of the person to greet", required = true) String name,
+	        @McpArg(name = "greeting-style", description = "The style of the greeting: formal, casual, or friendly", required = true) String style) {
 	    String prompt;
 	    switch (style != null ? style : "friendly") {
 	        case "formal":

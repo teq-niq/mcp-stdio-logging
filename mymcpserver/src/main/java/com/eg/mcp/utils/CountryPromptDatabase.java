@@ -46,6 +46,7 @@ public class CountryPromptDatabase {
 		try (var reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {
 			countries = loadCountries(reader);
 			buildDatabase(countries);
+			countryDatabase.put("", countries); // all countries for empty prefix
 		}
 	}
 
