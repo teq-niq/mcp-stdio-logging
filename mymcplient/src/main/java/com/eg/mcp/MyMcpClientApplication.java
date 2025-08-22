@@ -58,10 +58,10 @@ public class MyMcpClientApplication {
 
 				// Completions
 				CompleteResult completion = client.completeCompletion(new CompleteRequest(new PromptReference("country-status"),
-						new CompleteRequest.CompleteArgument("countryName", "a")));
+						new CompleteRequest.CompleteArgument("country-name", "a")));
 				System.out.println("Completion = " + completion);
 				
-				GetPromptResult geneteratedPrompt = client.getPrompt(new GetPromptRequest("generate_greeting_prompt", Map.of("name", "Doe", "style","friendly")));
+				GetPromptResult geneteratedPrompt = client.getPrompt(new GetPromptRequest("generate_greeting_prompt", Map.of("name", "Doe", "greeting-style","friendly")));
 				System.out.println("generatedPrompt = " + geneteratedPrompt);
 				context.close();
 			}

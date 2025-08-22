@@ -84,5 +84,18 @@ public class StoreMcpPromptProvider {
 
 	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
 	}
+	
+	@McpPrompt(name = "fun_prompt", description = "Generate a fun prompt")
+	public PromptMessage funPrompt(
+			@McpArg(name = "sports-name", description = "name of the sport", required = true) String sportName) {
+		String prompt = String.format(
+		        "Which planets or moons in the Solar System would be suitable for playing %s on, and why?",
+		        sportName
+		    );
+	    
+
+	    return new PromptMessage(Role.USER, new TextContent(prompt ));
+	}
+
 
 }
