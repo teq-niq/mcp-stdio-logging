@@ -35,6 +35,7 @@ public class MyMcpClientApplication {
 			if (mcpSyncClients.size() == 1) {
 				McpSyncClient client = mcpSyncClients.getFirst();
 				ListToolsResult toolsList = client.listTools();
+				
 				System.out.println("Available Tools = " + toolsList);
 				toolsList.tools().forEach(tool -> {
 					System.out.println("Tool: " + tool.name() + ", description: " + tool.description() + ", schema: "
@@ -61,8 +62,16 @@ public class MyMcpClientApplication {
 						new CompleteRequest.CompleteArgument("country-name", "a")));
 				System.out.println("Completion = " + completion);
 				
+				
 				GetPromptResult geneteratedPrompt = client.getPrompt(new GetPromptRequest("generate_greeting_prompt", Map.of("name", "Doe", "greeting-style","friendly")));
 				System.out.println("generatedPrompt = " + geneteratedPrompt);
+				
+				completion = client.completeCompletion(new CompleteRequest(new PromptReference("generate_greeting_prompt"),
+						new CompleteRequest.CompleteArgument("name", "")));
+				System.out.println("Completion nmae= " + completion);
+				completion = client.completeCompletion(new CompleteRequest(new PromptReference("generate_greeting_prompt"),
+						new CompleteRequest.CompleteArgument("greeting-stylex", "")));
+				System.out.println("Completion greeting-style= " + completion);
 				context.close();
 			}
 
