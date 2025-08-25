@@ -41,7 +41,7 @@ public class StoreMcpPromptProvider {
 	}
 	
 	
-	@McpPrompt(name = "brandz-greeting", description = "Gives information on how many stores are there in the input country name")
+	@McpPrompt(name = "country-status", description = "Gives information on how many stores are there in the input country name")
 	public GetPromptResult countryStoreStatus(
 			@McpArg(name = "country-name",  description = "The name of the country", required = true ) String countryName) {
 		String message;
