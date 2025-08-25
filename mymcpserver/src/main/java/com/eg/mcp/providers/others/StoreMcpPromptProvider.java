@@ -3,6 +3,8 @@ package com.eg.mcp.providers.others;
 import java.util.List;
 import java.util.random.RandomGenerator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.eg.mcp.utils.CountryPromptDatabase;
@@ -16,6 +18,7 @@ import io.modelcontextprotocol.spec.McpSchema.TextContent;
 
 @Service
 public class StoreMcpPromptProvider {
+	private static final Logger logger = LoggerFactory.getLogger(StoreMcpPromptProvider.class);
 
 	private final CountryPromptDatabase countryPromptDatabase;
 
@@ -32,13 +35,13 @@ public class StoreMcpPromptProvider {
 
 		String message = "Hi " + name + "! 👋 Welcome to Brand Z Sports Store.";
 
-
+		logger.debug("funPrompt generated prompt = " + message);
 		return new GetPromptResult("Brand Z Greeting",
 				List.of(new PromptMessage(Role.ASSISTANT, new TextContent(message))));
 	}
 	
 	
-	@McpPrompt(name = "country-status", description = "Gives information on how many stores are there in the input country name")
+	@McpPrompt(name = "brandz-greeting", description = "Gives information on how many stores are there in the input country name")
 	public GetPromptResult countryStoreStatus(
 			@McpArg(name = "country-name",  description = "The name of the country", required = true ) String countryName) {
 		String message;
@@ -54,7 +57,7 @@ public class StoreMcpPromptProvider {
 				message = "Enter a valid country";
 			}
 		}
-
+		logger.debug("country-status generated prompt = " + message);
 
 		return new GetPromptResult("Number of stores in the country",
 				List.of(new PromptMessage(Role.ASSISTANT, new TextContent(message))));
@@ -81,8 +84,9 @@ public class StoreMcpPromptProvider {
 	            prompt = "Please write a warm, friendly greeting";
 	            break;
 	    }
-
-	    return new PromptMessage(Role.USER, new TextContent(prompt + " for someone named " + name + "."));
+	    prompt+=" for someone named " + name + ".";
+	    logger.debug("generate_greeting_prompt generated prompt = " + prompt);
+	    return new PromptMessage(Role.USER, new TextContent(prompt ));
 	}
 	
 	@McpPrompt(name = "fun_prompt", description = "Generate a fun prompt")
@@ -92,7 +96,9 @@ public class StoreMcpPromptProvider {
 		        "Which planets or moons in the Solar System would be suitable for playing %s on, and why?",
 		        sportName
 		    );
-	    
+		
+		
+	    logger.debug("funPrompt generated prompt = " + prompt);
 
 	    return new PromptMessage(Role.USER, new TextContent(prompt ));
 	}

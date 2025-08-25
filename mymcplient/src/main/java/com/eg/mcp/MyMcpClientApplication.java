@@ -64,14 +64,19 @@ public class MyMcpClientApplication {
 				
 				
 				GetPromptResult geneteratedPrompt = client.getPrompt(new GetPromptRequest("generate_greeting_prompt", Map.of("name", "Doe", "greeting-style","friendly")));
-				System.out.println("generatedPrompt = " + geneteratedPrompt);
+				System.out.println("generatedPrompt generate_greeting_prompt= " + geneteratedPrompt);
 				
 				completion = client.completeCompletion(new CompleteRequest(new PromptReference("generate_greeting_prompt"),
 						new CompleteRequest.CompleteArgument("name", "")));
 				System.out.println("Completion nmae= " + completion);
 				completion = client.completeCompletion(new CompleteRequest(new PromptReference("generate_greeting_prompt"),
-						new CompleteRequest.CompleteArgument("greeting-stylex", "")));
+						new CompleteRequest.CompleteArgument("greeting-style", "")));
 				System.out.println("Completion greeting-style= " + completion);
+				completion = client.completeCompletion(new CompleteRequest(new PromptReference("fun_prompt"),
+						new CompleteRequest.CompleteArgument("sports-name", "")));
+				System.out.println("Completion fun_prompt-> sports-name= " + completion);
+				geneteratedPrompt = client.getPrompt(new GetPromptRequest("fun_prompt", Map.of("sports-name", "badminton")));
+				System.out.println("generatedPrompt = " + geneteratedPrompt);
 				context.close();
 			}
 
